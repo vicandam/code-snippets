@@ -1,73 +1,104 @@
 @extends('layouts.app')
 
+@push('styles')
+    <style>
+        button.v-app-bar__nav-icon{
+            display: none;
+        }
+    </style>
+@endpush
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <v-container
+        class="fill-height"
+        fluid
+    >
+        <v-row
+            align="center"
+            justify="center"
+        >
+            <v-col
+                cols="12"
+                sm="8"
+                md="4"
+            >
+                <v-form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <v-card class="elevation-12">
+                        <v-toolbar
+                            color="primary"
+                            dark
+                            flat
+                        >
+                            <v-toolbar-title>{{ __('Login') }}</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                                <v-text-field
+                                    label="Email"
+                                    name="email" value="{{ old('email') }}"
+                                    autocomplete="email"
+                                    autofocus
+                                    prepend-icon="person"
+                                    type="email"
+                                    required
+                                    @error('email')
+                                    error-messages = "{{ $message }}"
+                                    @enderror
+                                ></v-text-field>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                <v-text-field
+                                    id="password"
+                                    label="Password"
+                                    name="password"
+                                    required
+                                    @error('password')
+                                    error-messages = "{{ $message }}"
+                                    @enderror
+                                    autocomplete="current-password"
+                                    prepend-icon="lock"
+                                    type="password"
+                                ></v-text-field>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <v-checkbox
+                                type="checkbox"
+                                name="remember"
+                                id="remember"
+                                value ="{{ old('remember') ? 'checked' : '' }}"
+                                label="{{ __('Remember Me') }}"
+                                color="primary"
+                                hide-details
+                            ></v-checkbox>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                            @if (Route::has('password.request'))
+                                <div class="text-right">
+                                    <a class="v-btn v-btn--flat v-btn--text v-size--default" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                </div>
+                            @endif
+
+                        </v-card-text>
+                        <v-card-actions>
+                            <div class="flex-grow-1"></div>
+                            <v-btn type="submit" color="primary">Login</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-form>
+            </v-col>
+        </v-row>
+    </v-container>
 @endsection
+
+@push('scripts')
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: () => ({
+                drawer: false,
+                items: [],
+            }),
+        })
+    </script>
+@endpush
