@@ -1,100 +1,229 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('content')
+    <template>
+        <v-container fluid class="mt-12 pt-12 grey lighten-5">
+            <v-row no-gutters>
+                <v-col
+                    cols="12"
+                >
+                    <v-card
+                        class="pa-2"
+                        outlined
+                        tile
+                    >
+                        <v-row no-gutters>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                                md="8"
+                            >
 
-        <title>Laravel</title>
+                                <v-row no-gutters>
+                                    <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="6"
+                                    >
+                                    <div class="pa-4">
+                                        <div class="text-left">
+                                            <div class="title">Top answers</div>
+                                        </div>
+                                    </div>
+                                    </v-col>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+                                    <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="6"
+                                    >
+                                        <div class="pt-2 pb-2">
+                                            <div class=" text-right">
+                                                <v-btn class="ma-1" tile outlined dark color="#E64A19">
+                                                    <v-icon left>whatshot</v-icon> Latest
+                                                </v-btn>
+                                                <v-btn tile outlined dark color="#E64A19">
+                                                    <v-icon left>stars</v-icon> Top
+                                                </v-btn>
+                                                <v-btn class="ma-1" tile outlined dark color="#E64A19">
+                                                    <v-icon left>collections_bookmark</v-icon> Yours
+                                                </v-btn>
+                                            </div>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                                md="4"
+                            >
+                                <div
+                                    class="pa-2 text-right">
+                                    <v-btn class="ma-1" tile outlined dark color="#E64A19">
+                                        <v-icon left>mdi-pencil</v-icon> Post answer
+                                    </v-btn>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+            <v-row no-gutters>
+                <v-col
+                    cols="12"
+                    sm="6"
+                    md="8"
+                >
+                    <v-card
+                        class="pa-2"
+                        outlined
+                        tile
+                    >
 
-            .full-height {
-                height: 100vh;
-            }
+                        <template>
+                            <v-card
+                                class="mx-auto"
+                                color="#EFEBE9"
+                                light
+                                tile
+                                flat
+                            >
+                                <v-card-title>
+                                    <v-avatar size="50px" class="mr-2">
+                                        <img
+                                            src="https://cdn.vuetifyjs.com/images/john.jpg"
+                                            alt="John"
+                                        >
+                                    </v-avatar>
+                                    <span class="headline">Php</span>
+                                </v-card-title>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+                                <v-card-text class="title">
+                                    "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                </v-card-text>
 
-            .position-ref {
-                position: relative;
-            }
+                                <v-card-actions>
+                                    <v-list-item class="grow">
+                                        <v-list-item-avatar color="grey darken-3">
+                                            <v-img
+                                                class="elevation-6"
+                                                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                            ></v-img>
+                                        </v-list-item-avatar>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                                        <v-list-item-content>
+                                            <v-list-item-title>Created 2 months ago by vic</v-list-item-title>
+                                        </v-list-item-content>
 
-            .content {
-                text-align: center;
-            }
+                                        <v-row
+                                            align="center"
+                                            justify="end"
+                                        >
+                                            <v-icon class="mr-1">mdi-heart</v-icon>
+                                            <span class="subheading mr-2">256</span>
+                                            <span class="mr-1">·</span>
+                                            <v-icon class="mr-1">remove_red_eye</v-icon>
+                                            <span class="subheading">45</span>
+                                            <span class="mr-1">·</span>
+                                            <v-icon class="mr-1">mdi-share-variant</v-icon>
+                                            <span class="subheading">45</span>
+                                        </v-row>
+                                    </v-list-item>
+                                </v-card-actions>
+                            </v-card>
+                        </template>
 
-            .title {
-                font-size: 84px;
-            }
+                        <template>
+                            <div class="text-center ma-4">
+                                <v-pagination
+                                    v-model="page"
+                                    :length="4"
+                                    circle
+                                ></v-pagination>
+                            </div>
+                        </template>
+                    </v-card>
+                </v-col>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                <v-col
+                    cols="6"
+                    md="4"
+                >
+                    <v-card
+                        class="pa-2"
+                        outlined
+                        tile
+                    >
+                        <template>
+                            <v-card
+                                class="mx-auto"
+                                max-width="400"
+                            >
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+                                <v-list>
+                                    <v-subheader class="headline">Categories</v-subheader>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                                    <v-list-item class="mb-4">
+                                        <v-list-item-content>
+                                            <v-text-field
+                                                flat
+                                                hide-details
+                                                label="Search"
+                                                append-icon="search"
+                                            ></v-text-field>
+                                        </v-list-item-content>
+                                    </v-list-item>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                                    <v-list-item-group v-model="model" mandatory color="indigo">
+                                        <v-list-item
+                                            v-for="(list, i) in lists"
+                                            :key="i"
+                                        >
+                                            <v-list-item-avatar color="grey darken-3">
+                                                <v-img
+                                                    class="elevation-6"
+                                                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                                ></v-img>
+                                            </v-list-item-avatar>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                                            <v-list-item-content>
+                                                <v-list-item-title v-text="list.text"></v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-list-item-group>
+                                </v-list>
+                            </v-card>
+                        </template>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+    </template>
+@endsection
+
+@push('scripts')
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: () => ({
+                drawer: true,
+                page: 1,
+                items: [],
+                lists: [
+                    {
+                        text: 'Php',
+                    },
+                    {
+                        text: 'Laravel',
+                    },
+                    {
+                        text: 'Javascript',
+                    },
+                ],
+                model: 1,
+            }),
+        })
+    </script>
+@endpush
