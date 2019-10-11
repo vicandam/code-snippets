@@ -24,11 +24,11 @@
                                         sm="6"
                                         md="6"
                                     >
-                                    <div class="pa-4">
-                                        <div class="text-left">
-                                            <div class="title">Top answers</div>
+                                        <div class="pa-4">
+                                            <div class="text-left">
+                                                <div class="title">Details</div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </v-col>
 
                                     <v-col
@@ -82,70 +82,66 @@
                     >
 
                         <template>
-                            <a href="{{ route('topic.index') }}"
-                               class="v-btn v-btn--flat v-btn--text">
-                                <v-card
-                                    class="mx-auto"
-                                    color="#EFEBE9"
-                                    light
-                                    tile
-                                    flat
-                                >
-                                    <v-card-title>
-                                        <v-avatar size="50px" class="mr-2">
-                                            <img
-                                                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                                                alt="John"
-                                            >
-                                        </v-avatar>
-                                        <span class="headline">Php</span>
-                                    </v-card-title>
+                            <v-card
+                                class="mx-auto"
+                                color="#EFEBE9"
+                                light
+                                tile
+                                flat
+                            >
+                                <v-card-title>
+                                    <span class="title"><span class="headline font-weight-bold">Problem:</span> Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.</span>
+                                </v-card-title>
 
-                                    <v-card-text class="title">
-                                        "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
-                                    </v-card-text>
+                                <v-card-text class="pa-5 ma-4 font-weight-normal">
+                                    "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                </v-card-text>
 
-                                    <v-card-actions>
-                                        <v-list-item class="grow">
-                                            <v-list-item-avatar color="grey darken-3">
-                                                <v-img
-                                                    class="elevation-6"
-                                                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                                ></v-img>
-                                            </v-list-item-avatar>
+                                <v-card-actions>
+                                    <v-list-item class="grow" three-line>
+                                        <v-list-item-avatar color="grey darken-3 mt-5">
+                                            <v-img
+                                                class="elevation-6"
+                                                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                            ></v-img>
+                                        </v-list-item-avatar>
 
-                                            <v-list-item-content>
-                                                <v-list-item-title>Created 2 months ago by vic</v-list-item-title>
-                                            </v-list-item-content>
+                                        <v-list-item-content>
+                                            <v-list-item-subtitle>Created 2 months ago by vic</v-list-item-subtitle>
+                                        </v-list-item-content>
 
-                                            <v-row
-                                                align="center"
-                                                justify="end"
-                                            >
+                                        <v-row
+                                            align="center"
+                                            justify="end"
+                                        >
+                                            <v-btn text icon color="#F44336">
                                                 <v-icon class="mr-1">mdi-heart</v-icon>
-                                                <span class="subheading mr-2">256</span>
-                                                <span class="mr-1">·</span>
-                                                <v-icon class="mr-1">remove_red_eye</v-icon>
-                                                <span class="subheading">45</span>
-                                                <span class="mr-1">·</span>
+                                            </v-btn>
+                                            <span class="subheading mr-2">256</span>
+                                            <span class="mr-1">·</span>
+                                            <v-icon class="mr-1">remove_red_eye</v-icon>
+                                            <span class="subheading mr-2">45</span>
+                                            <span class="mr-1">·</span>
+                                            <v-btn text icon color="indigo">
                                                 <v-icon class="mr-1">mdi-share-variant</v-icon>
-                                                <span class="subheading">45</span>
-                                            </v-row>
-                                        </v-list-item>
-                                    </v-card-actions>
-                                </v-card>
-                            </a>
+                                            </v-btn>
+                                            <span class="subheading mr-2">45</span>
+
+                                            <div class="ml-8">
+                                                <v-btn href="topic/1/edit" fab dark x-small color="primary">
+                                                    <v-icon dark>edit</v-icon>
+                                                </v-btn>
+
+                                                <v-btn class="mx-1" fab dark x-small color="error">
+                                                    <v-icon dark>delete_forever</v-icon>
+                                                </v-btn>
+                                            </div>
+                                        </v-row>
+                                    </v-list-item>
+                                </v-card-actions>
+                            </v-card>
                         </template>
 
-                        <template>
-                            <div class="text-center ma-4">
-                                <v-pagination
-                                    v-model="page"
-                                    :length="4"
-                                    circle
-                                ></v-pagination>
-                            </div>
-                        </template>
                     </v-card>
                 </v-col>
 
@@ -231,11 +227,6 @@
             mounted () {
 
             },
-            methods: {
-                getTopics () {
-                    axios.get('');
-                }
-            }
         })
     </script>
 @endpush
