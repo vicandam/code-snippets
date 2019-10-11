@@ -13,24 +13,29 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $input = $request;
+
         $topics = new Topic();
 
-        if (! empty($input['keyword'])) {
-            $topics = Topic::Search($input['keyword']);
+        if (!empty($input['keyword'])) {
+            $topics = $topics->searchFilter($input['keyword']);
         }
 
-        $topics = $topics->with('category')
-            ->orderBy('updated_at', 'desc')
-            ->get();
+        $topics = $topics->with(['category', 'user']);
+
+        $topics = $topics->orderBy('id', 'desc');
+
+        $topics = $topics->paginate($input['paginate']);
 
         $categories = Category::all();
 
         $result = [
-            'message' => 'College successfully added',
+            'message' => 'Topics successfully retrieve',
             'data' => [
                 'topics' => $topics,
+                'topic_count' => $topics->count(),
                 'categories' => $categories
             ]
         ];

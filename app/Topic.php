@@ -3,10 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class Topic extends Model
 {
+    protected $dates = [
+        'created_at',
+    ];
+
+    public function getCreatedAtAttribute($date)
+    {
+        $date = Carbon::parse($date);
+        $elapsed = $date->diffForHumans(Carbon::now());
+
+        return $elapsed;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -17,7 +30,8 @@ class Topic extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeSearch($query, $keyword)
+
+    public function scopeSearchFilter($query, $keyword)
     {
         return $query->whereHas('category', function($category) use ($keyword) {
             $category->where('categories.name', 'like', '%' .$keyword. '%')

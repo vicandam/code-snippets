@@ -1,4 +1,4 @@
-<header id="app-toolbar" class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--clipped v-app-bar--fixed v-app-bar--is-scrolled brown darken-1" style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;" data-booted="true">
+<header id="app-toolbar" class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--clipped v-app-bar--fixed v-app-bar--is-scrolled" style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; background-color: #765d55;" data-booted="true">
     <div class="v-toolbar__content" style="height: 64px;">
         <button type="button" aria-label="Menu" class="v-app-bar__nav-icon hidden-lg-and-up v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default" @click="drawer = !drawer">
             <span class="v-btn__content">
@@ -14,16 +14,7 @@
         </a>
         <div class="v-toolbar__title hidden-xs-only">Snippets</div>
         <div class="spacer"></div>
-        <v-text-field
-            color="blue-grey lighten-2"
-            solo-inverted
-            flat
-            dark
-            hide-details
-            label="Search"
-            append-icon="search"
-        ></v-text-field>
-        <div class="spacer"></div>
+
         <div class="v-toolbar__items">
             @guest
             <a href="{{ route('login') }}" aria-label="{{ __('Login') }}" rel="noopener" class="v-btn v-btn--flat v-btn--text theme--dark v-size--default" style="min-width:48px;">
