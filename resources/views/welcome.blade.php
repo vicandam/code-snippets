@@ -24,11 +24,11 @@
                                         sm="6"
                                         md="6"
                                     >
-                                    <div class="pa-4">
-                                        <div class="text-left">
-                                            <div class="title">Top answers</div>
+                                        <div class="pa-4">
+                                            <div class="text-left">
+                                                <div class="title">Top answers</div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </v-col>
 
                                     <v-col
@@ -39,13 +39,16 @@
                                         <div class="pt-2 pb-2">
                                             <div class=" text-right">
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>whatshot</v-icon> Latest
+                                                    <v-icon left>whatshot</v-icon>
+                                                    Latest
                                                 </v-btn>
                                                 <v-btn tile outlined dark color="#E64A19">
-                                                    <v-icon left>stars</v-icon> Top
+                                                    <v-icon left>stars</v-icon>
+                                                    Top
                                                 </v-btn>
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>collections_bookmark</v-icon> Yours
+                                                    <v-icon left>collections_bookmark</v-icon>
+                                                    Yours
                                                 </v-btn>
                                             </div>
                                         </div>
@@ -60,7 +63,8 @@
                                 <div
                                     class="pa-2 text-right">
                                     <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                        <v-icon left>mdi-pencil</v-icon> Post answer
+                                        <v-icon left>mdi-pencil</v-icon>
+                                        Post answer
                                     </v-btn>
                                 </div>
                             </v-col>
@@ -80,8 +84,7 @@
                         outlined
                         tile
                     >
-
-                        <template>
+                        <template v-for="topic in topics">
                             <a href="{{ route('login') }}"
                                class="v-btn v-btn--flat v-btn--text">
                                 <v-card
@@ -94,7 +97,7 @@
                                     <v-card-title>
                                         <v-avatar size="50px" class="mr-2">
                                             <img
-                                                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                                                :src="'/storage/avatars/' + topic.category.image"
                                                 alt="John"
                                             >
                                         </v-avatar>
@@ -102,7 +105,7 @@
                                     </v-card-title>
 
                                     <v-card-text class="title">
-                                        "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                        @{{ topic.title }}
                                     </v-card-text>
 
                                     <v-card-actions>
@@ -180,18 +183,18 @@
 
                                     <v-list-item-group v-model="model" mandatory color="indigo">
                                         <v-list-item
-                                            v-for="(list, i) in lists"
+                                            v-for="(category, i) in categories"
                                             :key="i"
                                         >
                                             <v-list-item-avatar color="grey darken-3">
                                                 <v-img
                                                     class="elevation-6"
-                                                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                                    :src="'/storage/avatars/' + category.image"
                                                 ></v-img>
                                             </v-list-item-avatar>
 
                                             <v-list-item-content>
-                                                <v-list-item-title v-text="list.text"></v-list-item-title>
+                                                <v-list-item-title v-text="category.name"></v-list-item-title>
                                             </v-list-item-content>
                                         </v-list-item>
                                     </v-list-item-group>
@@ -214,26 +217,22 @@
                 drawer: true,
                 page: 1,
                 items: [],
-                lists: [
-                    {
-                        text: 'Php',
-                    },
-                    {
-                        text: 'Laravel',
-                    },
-                    {
-                        text: 'Javascript',
-                    },
-                ],
-                model: 1,
+                topics: [],
+                bottom: false,
+                categories: [],
             }),
 
-            mounted () {
-
+            mounted() {
+                this.getTopics();
             },
             methods: {
-                getTopics () {
-                    axios.get('');
+                getTopics: function () {
+                    let _this = this;
+
+                    axios.get('/api/topic').then(function (response) {
+                        _this.topics     = response.data.data.topics;
+                        _this.categories = response.data.data.categories;
+                    })
                 }
             }
         })
