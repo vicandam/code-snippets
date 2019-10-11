@@ -90,11 +90,13 @@
                                 flat
                             >
                                 <v-card-title>
-                                    <span class="title"><span class="headline font-weight-bold">Problem:</span> Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.</span>
+                                    <span class="title"><span class="headline font-weight-bold">Solution:</span> {{ $topic->title }}</span>
                                 </v-card-title>
 
                                 <v-card-text class="pa-5 ma-4 font-weight-normal">
-                                    "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                    <pre class="line-numbers">
+                                        {!! $topic->description !!}
+                                    </pre>
                                 </v-card-text>
 
                                 <v-card-actions>
@@ -128,7 +130,7 @@
                                             <span class="subheading mr-2">45</span>
 
                                             <div class="ml-8">
-                                                <v-btn href="topic/1/edit" fab dark x-small color="primary">
+                                                <v-btn href="{{ $topic->id }}/edit" fab dark x-small color="primary">
                                                     <v-icon dark>edit</v-icon>
                                                 </v-btn>
 
@@ -202,6 +204,7 @@
 @endsection
 
 @push('scripts')
+
     <script>
         new Vue({
             el: '#app',

@@ -85,7 +85,7 @@
                         tile
                     >
                         <template v-for="topic in topics">
-                            <a href="{{ route('login') }}"
+                            <a :href="'/topic/'+topic.id"
                                class="v-btn v-btn--flat v-btn--text">
                                 <v-card
                                     class="mx-auto"

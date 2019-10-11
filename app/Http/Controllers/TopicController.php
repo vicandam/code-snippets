@@ -14,7 +14,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        return view('topic.details.index');
+        //
     }
 
     /**
@@ -46,7 +46,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        return view('topic.details.index', compact('topic'));
     }
 
     /**
