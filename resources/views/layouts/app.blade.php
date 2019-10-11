@@ -13,13 +13,14 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
 
     @stack('styles')
 </head>
 <body>
     <div id="app">
-        <v-app>
+        <v-app v-cloak>
 
             @include('layouts.navigation.header')
             @include('layouts.navigation.drawer')

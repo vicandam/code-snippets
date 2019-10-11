@@ -8,7 +8,7 @@
         <a href="/" aria-label="Vuetify Home Page" title="Vuetify Home Page" class="router-link-active">
             <div role="img" aria-label="Snippets Logo" class="v-responsive v-image" style="height:38px;width:38px;">
                 <div class="v-responsive__sizer" style="padding-bottom: 114.504%;"></div>
-                <div class="v-image__image v-image__image--contain" style="background-image: url(&quot;https://cdn.vuetifyjs.com/images/logos/v-alt.svg&quot;); background-position: center center;"></div>
+                <div class="v-image__image v-image__image--contain" style="background-image: url('{{ asset('img/logo.png') }}'); background-position: center center;"></div>
                 <div class="v-responsive__content" style="width: 131px;"></div>
             </div>
         </a>
