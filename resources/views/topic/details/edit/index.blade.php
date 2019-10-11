@@ -106,7 +106,7 @@
                                             required
                                         ></v-text-field>
 
-                                        <div class="ml-5 text-center">
+                                        <div class="text-center">
                                             <textarea id="editor1" name="editor1" data-sample-preservewhitespace>
 {{--                                                {{ $topic->description }}--}}
                                             </textarea>
