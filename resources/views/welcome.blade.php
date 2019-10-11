@@ -224,6 +224,15 @@
                 ],
                 model: 1,
             }),
+
+            mounted () {
+
+            },
+            methods: {
+                getTopics () {
+                    axios.get('');
+                }
+            }
         })
     </script>
 @endpush
