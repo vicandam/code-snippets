@@ -39,13 +39,16 @@
                                         <div class="pt-2 pb-2">
                                             <div class=" text-right">
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>whatshot</v-icon> Latest
+                                                    <v-icon left>whatshot</v-icon>
+                                                    Latest
                                                 </v-btn>
                                                 <v-btn tile outlined dark color="#E64A19">
-                                                    <v-icon left>stars</v-icon> Top
+                                                    <v-icon left>stars</v-icon>
+                                                    Top
                                                 </v-btn>
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>collections_bookmark</v-icon> Yours
+                                                    <v-icon left>collections_bookmark</v-icon>
+                                                    Yours
                                                 </v-btn>
                                             </div>
                                         </div>
@@ -60,7 +63,8 @@
                                 <div
                                     class="pa-2 text-right">
                                     <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                        <v-icon left>mdi-pencil</v-icon> Post answer
+                                        <v-icon left>mdi-pencil</v-icon>
+                                        Post answer
                                     </v-btn>
                                 </div>
                             </v-col>
@@ -93,7 +97,7 @@
                                     <div>
                                         <v-autocomplete
                                             label="Categories"
-                                            autocomplete = "off"
+                                            autocomplete="off"
                                             {{--:items="categories"--}}
                                         ></v-autocomplete>
 
@@ -104,6 +108,11 @@
 
                                         <div class="ml-5 text-center">
                                             text editor here
+{{--                                            <textarea id="editor" name="description" data-sample-preservewhitespace>--}}
+{{--                                                {{ $topic->description }}--}}
+{{--                                            </textarea>--}}
+
+{{--                                            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>--}}
                                         </div>
                                     </div>
                                 </v-card-text>
@@ -115,11 +124,13 @@
                                             justify="start"
                                         >
                                             <v-btn class="ma-2" tile outlined color="primary">
-                                                <v-icon left>save</v-icon> Public
+                                                <v-icon left>save</v-icon>
+                                                Public
                                             </v-btn>
 
                                             <v-btn class="ma-2" tile outlined color="#E64A19">
-                                                <v-icon left>save</v-icon> Private
+                                                <v-icon left>save</v-icon>
+                                                Private
                                             </v-btn>
                                         </v-row>
 
@@ -128,7 +139,8 @@
                                             justify="end"
                                         >
                                             <v-btn class="ma-2" tile outlined color="#F44336">
-                                                <v-icon left>cancel</v-icon> Cancel
+                                                <v-icon left>cancel</v-icon>
+                                                Cancel
                                             </v-btn>
                                         </v-row>
                                     </v-list-item>
@@ -193,9 +205,55 @@
             </v-row>
         </v-container>
     </template>
+    <textarea id="editor1" name="editor1" data-sample-preservewhitespace>
+
+			</textarea>
+    {{--    <div class="container">--}}
+{{--        <textarea id="editor" name="description" data-sample-preservewhitespace></textarea>--}}
+{{--    </div>--}}
 @endsection
 
 @push('scripts')
+
+{{--<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>--}}
+{{--    <script>--}}
+{{--        var config = {--}}
+{{--            extraPlugins: 'codesnippet',--}}
+{{--            codeSnippet_theme: 'monokai_sublime',--}}
+{{--            height: 356,--}}
+{{--            uiColor: '#CCEAEE'--}}
+{{--        };--}}
+
+{{--        CKEDITOR.replace('editor', config);--}}
+{{--    </script>--}}
+<script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js" defer></script>
+<script>
+    var config = {
+        extraPlugins: 'codesnippet',
+        codeSnippet_theme: 'monokai_sublime',
+        height: 356
+    };
+
+    CKEDITOR.replace('editor1', config);
+</script>
+{{--<script>--}}
+{{--    ClassicEditor--}}
+{{--        .create( document.querySelector( '#editor' ) )--}}
+{{--        .then( editor => {--}}
+{{--            var config = {--}}
+{{--                extraPlugins: 'codesnippet',--}}
+{{--                codeSnippet_theme: 'monokai_sublime',--}}
+{{--                height: 356,--}}
+{{--                uiColor: '#CCEAEE'--}}
+{{--            };--}}
+
+{{--            CKEDITOR.replace('editor', config);--}}
+{{--        } )--}}
+{{--        .catch( error => {--}}
+{{--            console.error( error );--}}
+{{--        } );--}}
+{{--</script>--}}
+
     <script>
         new Vue({
             el: '#app',
@@ -216,9 +274,14 @@
                     },
                 ],
                 model: 1,
+                editor: ClassicEditor,
+                editorData: '<p>Content of the editor.</p>',
+                editorConfig: {
+
+                }
             }),
 
-            mounted () {
+            mounted() {
 
             },
         })
