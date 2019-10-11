@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,17 @@ class TopicController extends Controller
             $topics = Topic::Search($input['keyword']);
         }
 
-        $topics = $topics->orderBy('updated_at', 'desc')->get();
+        $topics = $topics->with('category')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $categories = Category::all();
 
         $result = [
             'message' => 'College successfully added',
             'data' => [
-                'topics' => $topics
+                'topics' => $topics,
+                'categories' => $categories
             ]
         ];
 
