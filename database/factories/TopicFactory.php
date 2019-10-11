@@ -8,12 +8,12 @@ use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Topic::class, function (Faker $faker) {
-    $user     = User::inRandomOrder()->get()->first();
-    $category = Category::inRandomOrder()->get()->first();
+    $user     = User::get()->first();
+    $category = Category::get()->first();
 
     return [
-        'user_id'     => $user->id,
-        'category_id' => $category->id,
+        'user_id'     => 1,
+        'category_id' => 1,
         'title'       => $faker->paragraph,
         'description' => $faker->text
     ];
