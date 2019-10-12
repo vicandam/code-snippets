@@ -90,13 +90,11 @@
                                 flat
                             >
                                 <v-card-title>
-                                    <span class="title"><span class="headline font-weight-bold">Solution:</span> {{ $topic->title }}</span>
+                                    <span class="title"><span class="headline font-weight-bold">Solution:</span><span v-text="title"></span></span>
                                 </v-card-title>
 
                                 <v-card-text class="pa-5 ma-4 font-weight-normal">
-                                    <pre class="line-numbers">
-                                        {!! $topic->description !!}
-                                    </pre>
+                                    <pre class="line-numbers" v-html="description"></pre>
                                 </v-card-text>
 
                                 <v-card-actions>
@@ -130,7 +128,8 @@
                                             <span class="subheading mr-2">45</span>
 
                                             <div class="ml-8">
-                                                <v-btn href="{{ $topic->id }}/edit" fab dark x-small color="primary">
+{{--                                                href="{{ $topic->id }}/edit"--}}
+                                                <v-btn  fab dark x-small color="primary" @click="edit">
                                                     <v-icon dark>edit</v-icon>
                                                 </v-btn>
 
@@ -201,6 +200,7 @@
             </v-row>
         </v-container>
     </template>
+    @include('topic.details.modal.edit')
 @endsection
 
 @push('scripts')
@@ -211,6 +211,15 @@
             vuetify: new Vuetify(),
             data: () => ({
                 drawer: true,
+                edit_dialog: false,
+                categoryId: @json($topic->category_id),
+                categories: @json($categories),
+                title: @json($topic->title),
+                description: @json($topic->description),
+                topicId: @json($topic->id),
+
+
+
                 page: 1,
                 items: [],
                 lists: [
@@ -230,6 +239,47 @@
             mounted () {
 
             },
+
+            methods: {
+                edit() {
+                    this.edit_dialog = true;
+                    // this.description = this.description;
+
+                    this.$nextTick(() => {
+
+                    setTimeout(function(){
+
+                        var config = {
+                            extraPlugins: 'codesnippet',
+                            codeSnippet_theme: 'dark',
+                            height: 356
+                        };
+
+                        CKEDITOR.replace('editor1', config);
+
+                    }.bind(this),100);
+
+                    });
+                },
+
+                save(status) {
+                    let _this = this;
+                    this.description = CKEDITOR.instances['editor1'].getData();
+                    let attributes = {
+                        'category_id': this.categoryId,
+                        'title': this.title,
+                        'description': this.description,
+                        'status': status
+                    };
+                    console.log(this.description);
+                    axios.patch('/api/topic/' + this.topicId, attributes).then(function (response) {
+                        // console.log(_this.description);
+
+                        _this.description = response.data.data.topic.description;
+                        _this.edit_dialog = false;
+                    })
+                }
+            }
         })
     </script>
 @endpush

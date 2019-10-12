@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Category;
+use App\Http\Requests\TopicUpdateRequest;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -93,9 +94,25 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Topic $topic)
+    public function update(TopicUpdateRequest $request, Topic $topic)
     {
-        //
+        $input = $request;
+
+        $topic->category_id = $input['category_id'];
+        $topic->title       = $input['title'];
+        $topic->description = $input['description'];
+        $topic->is_public   = $input['status'];
+
+        $topic->save();
+
+        $result = [
+            'message' => 'Topic successfully added',
+            'data'    => [
+                'topic' => $topic
+            ]
+        ];
+
+        return response()->json( $result, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**

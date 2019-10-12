@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,8 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        return view('topic.details.index', compact('topic'));
+        $categories = Category::all();
+        return view('topic.details.index', compact('topic', 'categories'));
     }
 
     /**
@@ -57,7 +59,8 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        return view('topic.details.edit.index');
+        $categories = Category::all();
+        return view('topic.details.edit.index', compact('topic', 'categories'));
     }
 
     /**

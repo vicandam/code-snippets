@@ -93,22 +93,27 @@
                                 tile
                                 flat
                             >
+                                <v-form method="POST" action="">
                                 <v-card-text>
                                     <div>
                                         <v-autocomplete
                                             label="Categories"
                                             autocomplete="off"
-                                            {{--:items="categories"--}}
+                                            :items="categories"
+                                            v-model="categoryId"
+                                            item-value="id"
+                                            item-text="category_name"
                                         ></v-autocomplete>
 
                                         <v-text-field
                                             label="Title"
                                             required
+                                            v-model="title"
                                         ></v-text-field>
 
                                         <div class="text-center">
                                             <textarea id="editor1" name="editor1" data-sample-preservewhitespace>
-{{--                                                {{ $topic->description }}--}}
+                                                {{ $topic->description }}
                                             </textarea>
                                         </div>
                                     </div>
@@ -142,6 +147,8 @@
                                         </v-row>
                                     </v-list-item>
                                 </v-card-actions>
+
+                                </v-form>
                             </v-card>
                         </template>
 
@@ -213,6 +220,9 @@
                 drawer: true,
                 page: 1,
                 items: [],
+                categoryId: @json($categories[$topic->category_id]),
+                categories: @json($categories),
+                title: @json($topic->title),
                 lists: [
                     {
                         text: 'Php',

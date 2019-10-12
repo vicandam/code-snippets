@@ -7,6 +7,14 @@ use Validator;
 
 class Category extends Model
 {
+    protected $appends = [
+        'category_name'
+    ];
+
+    public function getCategoryNameAttribute()
+    {
+        return $this->name;
+    }
     public function topic()
     {
         return $this->hasMany(Topic::class);

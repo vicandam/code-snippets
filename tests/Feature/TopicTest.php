@@ -38,4 +38,25 @@ class TopicTest extends TestCase
 
         $this->assertCount(1, $response->getOriginalContent() ['data']['topics']);
     }
+
+    public function test_logon_user_can_update_topic_test()
+    {
+        $this->factory
+            ->createUser()
+            ->signIn($this)
+            ->createTopic();
+
+        $attributes = [
+            'category_id' => 1,
+            'title' => 'title',
+            'description' => 'description',
+            'status' => 1
+        ];
+
+        $response = $this->patch('api/topic/' . $this->factory->user->id, $attributes);
+
+        $response->assertStatus(200);
+
+        $this->assertEquals($attributes['title'], $response->getOriginalContent()['data']['topic']['title'] );
+    }
 }
