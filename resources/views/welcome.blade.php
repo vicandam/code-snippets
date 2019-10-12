@@ -137,7 +137,7 @@
                                             </v-list-item-avatar>
 
                                             <v-list-item-content>
-                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} by @{{ topic.user.name }}</v-list-item-subtitle>
+                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} by <span v-if="topic.user != null" v-text="topic.user.name"></span></v-list-item-subtitle>
                                             </v-list-item-content>
 
                                             <v-row
