@@ -93,8 +93,8 @@
                                     <span class="title"><span class="headline font-weight-bold">Solution:</span><span v-text="title"></span></span>
                                 </v-card-title>
 
-                                <v-card-text class="pa-5 ma-4 font-weight-normal">
-                                    <pre class="line-numbers" v-html="description"></pre>
+                                <v-card-text class="mt-5 font-weight-normal">
+                                    <pre class="line-numbers" v-html="description" data-start="-5" style="white-space:pre-wrap;"></pre>
                                 </v-card-text>
 
                                 <v-card-actions>
@@ -150,52 +150,7 @@
                     cols="6"
                     md="4"
                 >
-                    <v-card
-                        class="pa-2"
-                        outlined
-                        tile
-                    >
-                        <template>
-                            <v-card
-                                class="mx-auto"
-                                max-width="400"
-                            >
-
-                                <v-list>
-                                    <v-subheader class="headline">Categories</v-subheader>
-
-                                    <v-list-item class="mb-4">
-                                        <v-list-item-content>
-                                            <v-text-field
-                                                flat
-                                                hide-details
-                                                label="Search"
-                                                append-icon="search"
-                                            ></v-text-field>
-                                        </v-list-item-content>
-                                    </v-list-item>
-
-                                    <v-list-item-group v-model="model" mandatory color="indigo">
-                                        <v-list-item
-                                            v-for="(list, i) in lists"
-                                            :key="i"
-                                        >
-                                            <v-list-item-avatar color="grey darken-3">
-                                                <v-img
-                                                    class="elevation-6"
-                                                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                                                ></v-img>
-                                            </v-list-item-avatar>
-
-                                            <v-list-item-content>
-                                                <v-list-item-title v-text="list.text"></v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </v-list-item-group>
-                                </v-list>
-                            </v-card>
-                        </template>
-                    </v-card>
+                    @include('topic.categories.index')
                 </v-col>
             </v-row>
         </v-container>
@@ -273,8 +228,8 @@
                     };
                     console.log(this.description);
                     axios.patch('/api/topic/' + this.topicId, attributes).then(function (response) {
-                        // console.log(_this.description);
 
+                        location.reload(true);
                         _this.description = response.data.data.topic.description;
                         _this.edit_dialog = false;
                     })
