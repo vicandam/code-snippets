@@ -46,10 +46,13 @@
                                                     <v-icon left>stars</v-icon>
                                                     Top
                                                 </v-btn>
-                                                <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
-                                                    <v-icon left>collections_bookmark</v-icon>
-                                                    My post
-                                                </v-btn>
+                                                @auth
+                                                    <v-btn class="ma-1" tile outlined dark color="#E64A19"
+                                                           href="{{ url('topic-my-posts') }}">
+                                                        <v-icon left>collections_bookmark</v-icon>
+                                                        My post
+                                                    </v-btn>
+                                                @endauth
                                             </div>
                                         </div>
                                     </v-col>
@@ -91,7 +94,7 @@
                         >
                             <div>
                                 <v-text-field
-                                    v-model         = "topicResponse.filter.keyword"
+                                    v-model="topicResponse.filter.keyword"
                                     color="blue-grey lighten-2"
                                     solo-inverted
                                     flat
@@ -181,7 +184,8 @@
                         </template>
 
                         <template>
-                            <div class="mt-3" v-if="topicResponse.topicCount > 0 && topicResponse.nextPageUrl != null || topicResponse.previousPageUrl != null">
+                            <div class="mt-3"
+                                 v-if="topicResponse.topicCount > 0 && topicResponse.nextPageUrl != null || topicResponse.previousPageUrl != null">
                                 <div class="text-center" v-if="isLoading == false">
                                     <v-pagination
                                         v-model="topicResponse.currentPage"
@@ -226,8 +230,8 @@
                 loadCategories: [],
 
                 postDialog: false,
-                disabled:              false,
-                isLoading:             false,
+                disabled: false,
+                isLoading: false,
 
                 topicDetails: {
                     categoryId: 1,
@@ -236,7 +240,7 @@
                 },
 
                 topicResponse: {
-                    timer:                 null,
+                    timer: null,
                     topicCount: 0,
                     currentPage: 0,
                     lastPages: 0,
@@ -252,7 +256,7 @@
                 },
 
                 categoryResponse: {
-                    timer:                 null,
+                    timer: null,
                     categoryCount: 0,
                     currentPage: 0,
                     lastPages: 0,
@@ -274,14 +278,14 @@
 
             methods: {
                 searchTopics: function () {
-                    var _this                           = this;
-                    _this.topics.data  = [];
+                    var _this = this;
+                    _this.topics.data = [];
 
-                    _this.topicResponse.filter.page                   = 1;
+                    _this.topicResponse.filter.page = 1;
 
-                    let url                             = '/api/topic';
-                    let attributes                      = _this.topicResponse.filter;
-                    var searchParameters                = new URLSearchParams();
+                    let url = '/api/topic';
+                    let attributes = _this.topicResponse.filter;
+                    var searchParameters = new URLSearchParams();
 
                     Object.keys(attributes).forEach(function (parameterName) {
                         searchParameters.append(parameterName, attributes[parameterName]);
@@ -290,55 +294,55 @@
                     url = url + '/?' + searchParameters.toString();
 
                     if (_this.topicResponse.timer) {
-                        _this.isLoading  = true;
+                        _this.isLoading = true;
                         clearTimeout(_this.topicResponse.timer);
-                        _this.topicResponse.timer      = null;
+                        _this.topicResponse.timer = null;
                     }
 
                     this.topicResponse.timer = setTimeout(() => {
                         axios.get(url)
                             .then(function (response) {
 
-                                _this.topics          = response.data.data.topics;
-                                _this.loadCategories      = response.data.data.categories;
-                                _this.topicResponse.topicCount      = response.data.data.topic_count;
-                                _this.topicResponse.currentPage     = response.data.data.topics.current_page;
-                                _this.topicResponse.lastPages       = response.data.data.topics.last_page;
+                                _this.topics = response.data.data.topics;
+                                _this.loadCategories = response.data.data.categories;
+                                _this.topicResponse.topicCount = response.data.data.topic_count;
+                                _this.topicResponse.currentPage = response.data.data.topics.current_page;
+                                _this.topicResponse.lastPages = response.data.data.topics.last_page;
                                 _this.topicResponse.previousPageUrl = response.data.data.topics.prev_page_url;
-                                _this.topicResponse.nextPageUrl     = response.data.data.topics.next_page_url;
+                                _this.topicResponse.nextPageUrl = response.data.data.topics.next_page_url;
 
                                 _this.isLoading = false;
                             });
                     }, 800);
                 },
 
-                nextTopics (pageNumber) {
-                    var _this             = this;
+                nextTopics(pageNumber) {
+                    var _this = this;
 
-                    _this.topicResponse.filter.page     = pageNumber;
+                    _this.topicResponse.filter.page = pageNumber;
 
-                    let url               = '/api/topic';
-                    let attributes        = _this.topicResponse.filter;
+                    let url = '/api/topic';
+                    let attributes = _this.topicResponse.filter;
 
-                    var searchParameters  = new URLSearchParams();
+                    var searchParameters = new URLSearchParams();
 
                     Object.keys(attributes).forEach(function (parameterName) {
                         searchParameters.append(parameterName, attributes[parameterName]);
                     });
 
-                    url  = url + '/?' + searchParameters.toString();
+                    url = url + '/?' + searchParameters.toString();
 
                     axios.get(url).then(function (response) {
 
-                        _this.topicResponse.topicCount       = response.data.data.topic_count;
-                        _this.topicResponse.currentPage      = response.data.data.topics.current_page;
-                        _this.topicResponse.lastPages        = response.data.data.topics.last_page;
-                        _this.topicResponse.previousPageUrl  = response.data.data.topics.prev_page_url;
-                        _this.topicResponse.nextPageUrl      = response.data.data.topics.next_page_url;
+                        _this.topicResponse.topicCount = response.data.data.topic_count;
+                        _this.topicResponse.currentPage = response.data.data.topics.current_page;
+                        _this.topicResponse.lastPages = response.data.data.topics.last_page;
+                        _this.topicResponse.previousPageUrl = response.data.data.topics.prev_page_url;
+                        _this.topicResponse.nextPageUrl = response.data.data.topics.next_page_url;
 
                         if (response.data.data.topics.data) {
 
-                            _this.topics.data  = [];
+                            _this.topics.data = [];
 
                             response.data.data.topics.data.filter(function (topic) {
 
@@ -386,35 +390,35 @@
                     }, 800);
                 },
 
-                nextCategory (pageNumber) {
-                    var _this             = this;
+                nextCategory(pageNumber) {
+                    var _this = this;
 
-                    _this.categoryResponse.filter.page     = pageNumber;
+                    _this.categoryResponse.filter.page = pageNumber;
 
-                    let url               = '/api/category';
-                    let attributes        = _this.categoryResponse.filter;
+                    let url = '/api/category';
+                    let attributes = _this.categoryResponse.filter;
 
-                    var searchParameters  = new URLSearchParams();
+                    var searchParameters = new URLSearchParams();
 
                     Object.keys(attributes).forEach(function (parameterName) {
                         searchParameters.append(parameterName, attributes[parameterName]);
                     });
 
-                    url  = url + '/?' + searchParameters.toString();
+                    url = url + '/?' + searchParameters.toString();
 
                     axios.get(url).then(function (response) {
 
                         console.log(response);
 
-                        _this.categoryResponse.categoryCount    = response.data.data.category_count;
-                        _this.categoryResponse.currentPage      = response.data.data.categories.current_page;
-                        _this.categoryResponse.lastPages        = response.data.data.categories.last_page;
-                        _this.categoryResponse.previousPageUrl  = response.data.data.categories.prev_page_url;
-                        _this.categoryResponse.nextPageUrl      = response.data.data.categories.next_page_url;
+                        _this.categoryResponse.categoryCount = response.data.data.category_count;
+                        _this.categoryResponse.currentPage = response.data.data.categories.current_page;
+                        _this.categoryResponse.lastPages = response.data.data.categories.last_page;
+                        _this.categoryResponse.previousPageUrl = response.data.data.categories.prev_page_url;
+                        _this.categoryResponse.nextPageUrl = response.data.data.categories.next_page_url;
 
                         if (response.data.data.categories.data) {
 
-                            _this.categories.data  = [];
+                            _this.categories.data = [];
 
                             response.data.data.categories.data.filter(function (category) {
 
@@ -424,21 +428,21 @@
                     });
                 },
 
-                showCategory:function(categoryId){
+                showCategory: function (categoryId) {
                     this.topicResponse.filter.categoryId = categoryId;
                     this.searchTopics();
                 },
 
                 viewTopic: function (topicId) {
-                    window.open('/topic/'+ topicId, '_self');
+                    window.open('/topic/' + topicId, '_self');
                 },
 
-                postTopicModal:function () {
+                postTopicModal: function () {
                     this.postDialog = true;
 
                     this.$nextTick(() => {
 
-                        setTimeout(function(){
+                        setTimeout(function () {
 
                             var config = {
                                 extraPlugins: 'codesnippet',
@@ -448,12 +452,12 @@
 
                             CKEDITOR.replace('editor1', config);
 
-                        }.bind(this),100);
+                        }.bind(this), 100);
 
                     });
                 },
 
-                savePost: function(status) {
+                savePost: function (status) {
                     let _this = this;
 
                     this.topicDetails.description = CKEDITOR.instances['editor1'].getData();

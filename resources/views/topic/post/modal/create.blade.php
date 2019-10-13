@@ -9,21 +9,41 @@
 
                 @if(url()->current() == $actual_link.'/topic/'. $topicId)
                     <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                        <v-icon left>home</v-icon> Home
+                        <v-icon left>home</v-icon>
+                        Home
                     </v-btn>
-                    <v-btn class="ma-1" tile outlined dark @click="postTopicModal" color="#E64A19">
-                        <v-icon left>mdi-pencil</v-icon>
-                        Post answer
-                    </v-btn>
-                    <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
-                        <v-icon left>collections_bookmark</v-icon> My post
-                    </v-btn>
+                    @guest
+                        <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ route('login') }}">
+                            <v-icon left>mdi-pencil</v-icon>
+                            Post answer
+                        </v-btn>
+                    @endguest
 
+                    @auth
+                        <v-btn class="ma-1" tile outlined dark @click="postTopicModal" color="#E64A19">
+                            <v-icon left>mdi-pencil</v-icon>
+                            Post answer
+                        </v-btn>
+
+                        <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
+                            <v-icon left>collections_bookmark</v-icon>
+                            My post
+                        </v-btn>
+                    @endauth
                 @else
-                    <v-btn class="ma-1" tile outlined dark @click="postTopicModal" color="#E64A19">
-                        <v-icon left>mdi-pencil</v-icon>
-                        Post answer
-                    </v-btn>
+                    @guest
+                        <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ route('login') }}">
+                            <v-icon left>mdi-pencil</v-icon>
+                            Post answer
+                        </v-btn>
+                    @endguest
+
+                    @auth
+                        <v-btn class="ma-1" tile outlined dark @click="postTopicModal" color="#E64A19">
+                            <v-icon left>mdi-pencil</v-icon>
+                            Post answer
+                        </v-btn>
+                    @endauth
                 @endif
 
             </template>
@@ -62,7 +82,8 @@
                                         ></v-text-field>
 
                                         <div class="text-center">
-                                            <textarea id="editor1" v-model="topicDetails.description" data-sample-preservewhitespace></textarea>
+                                            <textarea id="editor1" v-model="topicDetails.description"
+                                                      data-sample-preservewhitespace></textarea>
                                         </div>
                                     </div>
                                 </v-card-text>
@@ -73,7 +94,7 @@
                                             align="center"
                                             justify="start"
                                         >
-                                            <v-btn class="ma-2" tile outlined color="primary"  @click="savePost(1)">
+                                            <v-btn class="ma-2" tile outlined color="primary" @click="savePost(1)">
                                                 <v-icon left>save</v-icon>
                                                 Public
                                             </v-btn>

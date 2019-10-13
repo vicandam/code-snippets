@@ -27,7 +27,7 @@
                     @csrf
                     <v-card class="elevation-12">
                         <v-toolbar
-                            color="primary"
+                            color="#765d55"
                             dark
                             flat
                         >
@@ -42,12 +42,14 @@
                                     prepend-icon="person"
                                     type="email"
                                     required
+                                    color="#E64A19"
                                     @error('email')
                                     error-messages = "{{ $message }}"
                                     @enderror
                                 ></v-text-field>
 
                                 <v-text-field
+                                    color="#E64A19"
                                     id="password"
                                     label="Password"
                                     name="password"
@@ -66,7 +68,7 @@
                                 id="remember"
                                 value ="{{ old('remember') ? 'checked' : '' }}"
                                 label="{{ __('Remember Me') }}"
-                                color="primary"
+                                color="#E64A19"
                                 hide-details
                             ></v-checkbox>
 
@@ -81,7 +83,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <div class="flex-grow-1"></div>
-                            <v-btn type="submit" color="primary">Login</v-btn>
+                            <v-btn type="submit" tile outlined dark color="#E64A19">Login</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-form>
