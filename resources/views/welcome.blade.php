@@ -62,10 +62,9 @@
                             >
                                 <div
                                     class="pa-2 text-right">
-                                    <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                        <v-icon left>mdi-pencil</v-icon>
-                                        Post answer
-                                    </v-btn>
+
+                                    @include('topic.post.modal.create')
+
                                 </div>
                             </v-col>
                         </v-row>
@@ -231,9 +230,17 @@
                 topics: [],
                 bottom: false,
                 categories: [],
+                loadCategories: [],
 
+                postDialog: false,
                 disabled:              false,
                 isLoading:             false,
+
+                topicDetails: {
+                    categoryId: 1,
+                    title: '',
+                    description: ''
+                },
 
                 topicResponse: {
                     timer:                 null,
@@ -300,7 +307,7 @@
                             .then(function (response) {
 
                                 _this.topics          = response.data.data.topics;
-                                // _this.categories      = response.data.data.categories;
+                                _this.loadCategories      = response.data.data.categories;
                                 _this.topicResponse.topicCount      = response.data.data.topic_count;
                                 _this.topicResponse.currentPage     = response.data.data.topics.current_page;
                                 _this.topicResponse.lastPages       = response.data.data.topics.last_page;
@@ -431,7 +438,27 @@
 
                 viewTopic: function (topicId) {
                     window.open('/topic/'+ topicId, '_self');
-                }
+                },
+
+                postTopicModal:function () {
+                    this.postDialog = true;
+
+                    this.$nextTick(() => {
+
+                        setTimeout(function(){
+
+                            var config = {
+                                extraPlugins: 'codesnippet',
+                                codeSnippet_theme: 'dark',
+                                height: 356
+                            };
+
+                            CKEDITOR.replace('editor1', config);
+
+                        }.bind(this),100);
+
+                    });
+                },
             }
         })
     </script>

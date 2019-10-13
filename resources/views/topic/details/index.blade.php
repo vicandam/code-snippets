@@ -47,15 +47,10 @@
                             >
                                 <div
                                     class="pa-2 text-right">
-                                    <v-btn tile outlined dark color="#E64A19">
-                                        <v-icon left>home</v-icon> Home
-                                    </v-btn>
-                                    <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
-                                        <v-icon left>collections_bookmark</v-icon> My post
-                                    </v-btn>
-                                    <v-btn tile outlined dark color="#E64A19">
-                                        <v-icon left>mdi-pencil</v-icon> Post answer
-                                    </v-btn>
+{{--                                    <v-btn tile outlined dark color="#E64A19">--}}
+{{--                                        <v-icon left>mdi-pencil</v-icon> Post answer--}}
+{{--                                    </v-btn>--}}
+                                    @include('topic.post.modal.create')
                                 </div>
                             </v-col>
                         </v-row>
@@ -120,7 +115,6 @@
                                             <span class="subheading mr-2">45</span>
 
                                             <div class="ml-8">
-{{--                                                href="{{ $topic->id }}/edit"--}}
                                                 <v-btn  fab dark x-small color="primary" @click="edit">
                                                     <v-icon dark>edit</v-icon>
                                                 </v-btn>
@@ -140,6 +134,7 @@
             </v-row>
         </v-container>
     </template>
+
     @include('topic.details.modal.edit')
 @endsection
 
@@ -159,30 +154,21 @@
                 topicId: @json($topic->id),
                 createdAt: @json($topic->created_at),
 
+                postDialog: false,
                 page: 1,
                 items: [],
+                loadCategories: [],
                 model: 1,
 
-                isLoading:             false,
-
-                categoryResponse: {
-                    timer:                 null,
-                    categoryCount: 0,
-                    currentPage: 0,
-                    lastPages: 0,
-                    previousPageUrl: 0,
-                    nextPageUrl: 0,
-
-                    filter: {
-                        keyword: '',
-                        paginate: 8,
-                        searchBy: 'filter',
-                    },
-                }
+                topicDetails: {
+                    categoryId: 1,
+                    title: '',
+                    description: ''
+                },
             }),
 
             mounted () {
-                this.searchCategory();
+                this.loadCategories = this.categories;
             },
 
             methods: {
@@ -225,79 +211,23 @@
                     })
                 },
 
-                searchCategory: function () {
-                    var self = this;
-                    self.categories.data = [];
+                postTopicModal:function () {
+                    this.postDialog = true;
 
-                    var url = "/api/category";
-                    let attributes = this.categoryResponse.filter;
+                    this.$nextTick(() => {
 
-                    var searchParameters = new URLSearchParams();
+                        setTimeout(function(){
 
-                    Object.keys(attributes).forEach(function (parameterName) {
-                        searchParameters.append(parameterName, attributes[parameterName]);
-                    });
+                            var config = {
+                                extraPlugins: 'codesnippet',
+                                codeSnippet_theme: 'dark',
+                                height: 356
+                            };
 
-                    url = url + '/?' + searchParameters.toString();
+                            CKEDITOR.replace('editor1', config);
 
-                    if (this.categoryResponse.timer) {
-                        this.isLoading = true;
-                        clearTimeout(this.categoryResponse.timer);
-                        this.categoryResponse.timer = null;
-                    }
+                        }.bind(this),100);
 
-                    this.categoryResponse.timer = setTimeout(() => {
-
-                        axios.get(url)
-                            .then(function (response) {
-
-                                self.categories = response.data.data.categories;
-                                self.categoryResponse.categoryCount = response.data.data.category_count;
-                                self.categoryResponse.currentPage = response.data.data.categories.current_page;
-                                self.categoryResponse.lastPages = response.data.data.categories.last_page;
-                                self.categoryResponse.previousPageUrl = response.data.data.categories.prev_page_url;
-                                self.categoryResponse.nextPageUrl = response.data.data.categories.next_page_url;
-
-                                self.isLoading = false;
-                            });
-                    }, 800);
-                },
-
-                nextCategory (pageNumber) {
-                    var _this             = this;
-
-                    _this.categoryResponse.filter.page     = pageNumber;
-
-                    let url               = '/api/category';
-                    let attributes        = _this.categoryResponse.filter;
-
-                    var searchParameters  = new URLSearchParams();
-
-                    Object.keys(attributes).forEach(function (parameterName) {
-                        searchParameters.append(parameterName, attributes[parameterName]);
-                    });
-
-                    url  = url + '/?' + searchParameters.toString();
-
-                    axios.get(url).then(function (response) {
-
-                        console.log(response);
-
-                        _this.categoryResponse.categoryCount    = response.data.data.category_count;
-                        _this.categoryResponse.currentPage      = response.data.data.categories.current_page;
-                        _this.categoryResponse.lastPages        = response.data.data.categories.last_page;
-                        _this.categoryResponse.previousPageUrl  = response.data.data.categories.prev_page_url;
-                        _this.categoryResponse.nextPageUrl      = response.data.data.categories.next_page_url;
-
-                        if (response.data.data.categories.data) {
-
-                            _this.categories.data  = [];
-
-                            response.data.data.categories.data.filter(function (category) {
-
-                                _this.categories.data.push(category);
-                            });
-                        }
                     });
                 },
             }
