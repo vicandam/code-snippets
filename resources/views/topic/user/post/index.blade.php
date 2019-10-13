@@ -141,7 +141,7 @@
                                                 align="center"
                                                 justify="end"
                                             >
-                                                <v-btn text icon color="#F44336">
+                                                <v-btn text icon color="#F44336" @click="onLike(topic.id)">
                                                     <v-icon class="mr-1">mdi-heart</v-icon>
                                                 </v-btn>
                                                 <span class="subheading mr-2" v-text="topic.likes"></span>
@@ -464,6 +464,12 @@
                         _this.postDialog = false;
                     })
                 },
+
+                onLike(id) {
+                    axios.post('/api/like/' + id).then((response) => {
+                        this.searchTopics();
+                    })
+                }
             }
         })
     </script>
