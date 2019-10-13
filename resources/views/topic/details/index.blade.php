@@ -193,6 +193,7 @@
 
             mounted() {
                 this.loadCategories = this.categories;
+                this.categoryId = categories.id;
             },
 
             methods: {
