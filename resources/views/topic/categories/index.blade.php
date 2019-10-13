@@ -1,14 +1,13 @@
 <v-card
     class="pa-2"
-    outlined
     tile
+    flat
+    elevation ="0"
 >
     <template>
         <v-card
             class="mx-auto"
             max-width="400"
-            flat
-            elevation ="0"
         >
 
             <v-list>
@@ -47,7 +46,7 @@
             </v-list>
 
             <template>
-                <div class="ma-5" v-if="categoryResponse.categoryCount > 0 && categoryResponse.nextPageUrl != null || categoryResponse.previousPageUrl != null">
+                <div class="pb-6" v-if="categoryResponse.categoryCount > 0 && categoryResponse.nextPageUrl != null || categoryResponse.previousPageUrl != null">
                     <div class="text-center" v-if="isLoading == false">
                         <v-pagination
                             v-model="categoryResponse.currentPage"

@@ -185,7 +185,7 @@
 
                     filter: {
                         keyword: '',
-                        paginate: 5,
+                        paginate: 8,
                         searchBy: 'filter',
                     },
                 }
