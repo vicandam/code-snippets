@@ -92,7 +92,7 @@
                         >
                             <div>
                                 <v-text-field
-                                    v-model         = "filter.keyword"
+                                    v-model         = "topicResponse.filter.keyword"
                                     color="blue-grey lighten-2"
                                     solo-inverted
                                     flat
@@ -104,7 +104,7 @@
                             </div>
                         </v-card>
 
-                        <template v-if="topicCount > 0" v-for="topic in topics.data">
+                        <template v-if="topicResponse.topicCount > 0" v-for="topic in topics.data">
                             <div class="pa-3">
                                 <v-card
                                     class="mx-auto"
@@ -172,7 +172,7 @@
                             </div>
                         </template>
 
-                        <template v-if="topicCount == 0 && isLoading == false">
+                        <template v-if="topicResponse.topicCount == 0 && isLoading == false">
                             <div class="pa-3">
                                 <v-card
                                     class="mx-auto"
@@ -189,16 +189,16 @@
                         </template>
 
                         <template>
-                            <div class="mt-3" v-if="topicCount > 0 && nextPageUrl != null || previousPageUrl != null">
+                            <div class="mt-3" v-if="topicResponse.topicCount > 0 && topicResponse.nextPageUrl != null || topicResponse.previousPageUrl != null">
                                 <div class="text-center" v-if="isLoading == false">
                                     <v-pagination
-                                        v-model="currentPage"
-                                        :length="lastPages"
+                                        v-model="topicResponse.currentPage"
+                                        :length="topicResponse.lastPages"
                                         prev-icon="mdi-menu-left"
                                         next-icon="mdi-menu-right"
                                         :total-visible="5"
                                         circle
-                                        @input="next"
+                                        @input="nextTopics"
                                     ></v-pagination>
                                 </div>
 
@@ -223,6 +223,7 @@
     <script>
         new Vue({
             el: '#app',
+            vuetify: new Vuetify(),
             data: () => ({
                 drawer: true,
                 page: 1,
@@ -230,36 +231,55 @@
                 topics: [],
                 bottom: false,
                 categories: [],
-                topicCount: 0,
 
-                isLoading:             false,
                 disabled:              false,
-                timer:                 null,
-                currentPage:           0,
-                lastPages:             0,
-                previousPageUrl:       0,
-                nextPageUrl:           0,
+                isLoading:             false,
 
-                filter: {
-                    keyword:               '',
-                    paginate:              5,
-                    searchBy:              'filter',
+                topicResponse: {
+                    timer:                 null,
+                    topicCount: 0,
+                    currentPage: 0,
+                    lastPages: 0,
+                    previousPageUrl: 0,
+                    nextPageUrl: 0,
+
+                    filter: {
+                        keyword: '',
+                        paginate: 5,
+                        searchBy: 'filter',
+                    },
                 },
+
+                categoryResponse: {
+                    timer:                 null,
+                    categoryCount: 0,
+                    currentPage: 0,
+                    lastPages: 0,
+                    previousPageUrl: 0,
+                    nextPageUrl: 0,
+
+                    filter: {
+                        keyword: '',
+                        paginate: 5,
+                        searchBy: 'filter',
+                    },
+                }
             }),
-            vuetify: new Vuetify(),
 
             mounted() {
                 this.searchTopics();
+                this.searchCategory();
             },
+
             methods: {
                 searchTopics: function () {
                     var _this                           = this;
                     _this.topics.data  = [];
 
-                    _this.filter.page                   = 1;
+                    _this.topicResponse.filter.page                   = 1;
 
                     let url                             = '/api/topic';
-                    let attributes                      = _this.filter;
+                    let attributes                      = _this.topicResponse.filter;
                     var searchParameters                = new URLSearchParams();
 
                     Object.keys(attributes).forEach(function (parameterName) {
@@ -268,36 +288,36 @@
 
                     url = url + '/?' + searchParameters.toString();
 
-                    if (_this.timer) {
+                    if (_this.topicResponse.timer) {
                         _this.isLoading  = true;
-                        clearTimeout(_this.timer);
-                        _this.timer      = null;
+                        clearTimeout(_this.topicResponse.timer);
+                        _this.topicResponse.timer      = null;
                     }
 
-                    this.timer = setTimeout(() => {
+                    this.topicResponse.timer = setTimeout(() => {
                         axios.get(url)
                             .then(function (response) {
 
                                 _this.topics          = response.data.data.topics;
-                                _this.categories      = response.data.data.categories;
-                                _this.topicCount      = response.data.data.topic_count;
-                                _this.currentPage     = response.data.data.topics.current_page;
-                                _this.lastPages       = response.data.data.topics.last_page;
-                                _this.previousPageUrl = response.data.data.topics.prev_page_url;
-                                _this.nextPageUrl     = response.data.data.topics.next_page_url;
+                                // _this.categories      = response.data.data.categories;
+                                _this.topicResponse.topicCount      = response.data.data.topic_count;
+                                _this.topicResponse.currentPage     = response.data.data.topics.current_page;
+                                _this.topicResponse.lastPages       = response.data.data.topics.last_page;
+                                _this.topicResponse.previousPageUrl = response.data.data.topics.prev_page_url;
+                                _this.topicResponse.nextPageUrl     = response.data.data.topics.next_page_url;
 
                                 _this.isLoading = false;
                             });
                     }, 800);
                 },
 
-                next (pageNumber) {
+                nextTopics (pageNumber) {
                     var _this             = this;
 
-                    _this.filter.page     = pageNumber;
+                    _this.topicResponse.filter.page     = pageNumber;
 
                     let url               = '/api/topic';
-                    let attributes        = _this.filter;
+                    let attributes        = _this.topicResponse.filter;
 
                     var searchParameters  = new URLSearchParams();
 
@@ -309,11 +329,11 @@
 
                     axios.get(url).then(function (response) {
 
-                        _this.topicCount       = response.data.data.topic_count;
-                        _this.currentPage      = response.data.data.topics.current_page;
-                        _this.lastPages        = response.data.data.topics.last_page;
-                        _this.previousPageUrl  = response.data.data.topics.prev_page_url;
-                        _this.nextPageUrl      = response.data.data.topics.next_page_url;
+                        _this.topicResponse.topicCount       = response.data.data.topic_count;
+                        _this.topicResponse.currentPage      = response.data.data.topics.current_page;
+                        _this.topicResponse.lastPages        = response.data.data.topics.last_page;
+                        _this.topicResponse.previousPageUrl  = response.data.data.topics.prev_page_url;
+                        _this.topicResponse.nextPageUrl      = response.data.data.topics.next_page_url;
 
                         if (response.data.data.topics.data) {
 
@@ -322,6 +342,82 @@
                             response.data.data.topics.data.filter(function (topic) {
 
                                 _this.topics.data.push(topic);
+                            });
+                        }
+                    });
+                },
+
+                searchCategory: function () {
+                    var self = this;
+                    self.categories.data = [];
+
+                    var url = "/api/category";
+                    let attributes = this.categoryResponse.filter;
+
+                    var searchParameters = new URLSearchParams();
+
+                    Object.keys(attributes).forEach(function (parameterName) {
+                        searchParameters.append(parameterName, attributes[parameterName]);
+                    });
+
+                    url = url + '/?' + searchParameters.toString();
+
+                    if (this.categoryResponse.timer) {
+                        this.isLoading = true;
+                        clearTimeout(this.categoryResponse.timer);
+                        this.categoryResponse.timer = null;
+                    }
+
+                    this.categoryResponse.timer = setTimeout(() => {
+
+                        axios.get(url)
+                            .then(function (response) {
+
+                                self.categories = response.data.data.categories;
+                                self.categoryResponse.categoryCount = response.data.data.category_count;
+                                self.categoryResponse.currentPage = response.data.data.categories.current_page;
+                                self.categoryResponse.lastPages = response.data.data.categories.last_page;
+                                self.categoryResponse.previousPageUrl = response.data.data.categories.prev_page_url;
+                                self.categoryResponse.nextPageUrl = response.data.data.categories.next_page_url;
+
+                                self.isLoading = false;
+                            });
+                    }, 800);
+                },
+
+                nextCategory (pageNumber) {
+                    var _this             = this;
+
+                    _this.categoryResponse.filter.page     = pageNumber;
+
+                    let url               = '/api/category';
+                    let attributes        = _this.categoryResponse.filter;
+
+                    var searchParameters  = new URLSearchParams();
+
+                    Object.keys(attributes).forEach(function (parameterName) {
+                        searchParameters.append(parameterName, attributes[parameterName]);
+                    });
+
+                    url  = url + '/?' + searchParameters.toString();
+
+                    axios.get(url).then(function (response) {
+
+                        console.log(response);
+
+                        _this.categoryResponse.categoryCount    = response.data.data.category_count;
+                        _this.categoryResponse.currentPage      = response.data.data.categories.current_page;
+                        _this.categoryResponse.lastPages        = response.data.data.categories.last_page;
+                        _this.categoryResponse.previousPageUrl  = response.data.data.categories.prev_page_url;
+                        _this.categoryResponse.nextPageUrl      = response.data.data.categories.next_page_url;
+
+                        if (response.data.data.categories.data) {
+
+                            _this.categories.data  = [];
+
+                            response.data.data.categories.data.filter(function (category) {
+
+                                _this.categories.data.push(category);
                             });
                         }
                     });

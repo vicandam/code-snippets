@@ -12,7 +12,8 @@ pre[class*="language-"] {
 	background: none;
 	text-shadow: 0 1px white;
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
+	/*font-size: 1em;*/
+	font-size: 12px;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -149,7 +150,7 @@ pre[data-line] {
 	position: absolute;
 	left: 0;
 	right: 0;
-	padding: inherit 0;
+	padding: inherit;
 	margin-top: 1em; /* Same as .prism’s padding-top */
 
 	background: hsla(24, 20%, 50%,.08);
@@ -192,7 +193,7 @@ pre[data-line] {
 
 pre[class*="language-"].line-numbers {
 	position: relative;
-	padding-left: 3.8em;
+	padding-left: 2.5em;
 	counter-reset: linenumber;
 }
 
@@ -298,3 +299,6 @@ div.code-toolbar > .toolbar span:focus {
 	text-decoration: none;
 }
 
+pre[class*="language-"].line-numbers > code:before {
+    letter-spacing: -8px;
+}

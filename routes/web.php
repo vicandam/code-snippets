@@ -27,4 +27,5 @@ Route::resource('topic', 'TopicController');
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('topic', 'Api\TopicController');
+    Route::resource('category', 'Api\CategoryController');
 });

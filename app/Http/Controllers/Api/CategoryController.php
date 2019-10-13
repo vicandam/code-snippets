@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -12,9 +13,33 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $input = $request;
+
+        if(! empty($input['searchBy'])) {
+
+            $searchBy        = ! empty($input['searchBy'])   ? $input['searchBy'] : null;
+            $paginate        = ! empty($input['paginate'])   ? $input['paginate'] : null;
+            $page            = ! empty($input['page'])       ? $input['page'] : null;
+
+            $categories = new Category();
+
+            if($searchBy == 'filter') {
+                $categories = $categories->filterSearch($input);
+            }
+
+            $categories = $categories->paginate($input['paginate']);
+
+            $result = [
+                'data' => [
+                    'categories'     => $categories,
+                    'category_count' => $categories->count($categories)
+                ]
+            ];
+        }
+
+        return response()->json($result, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
