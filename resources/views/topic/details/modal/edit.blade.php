@@ -50,15 +50,7 @@
                                 ></v-text-field>
 
                                 <div class="text-center">
-{{--                                    <v-textarea--}}
-{{--                                        id="editor1"--}}
-{{--                                        clearable--}}
-{{--                                        clear-icon="cancel"--}}
-{{--                                        label="Text"--}}
-{{--                                        v-model="new_description"--}}
-{{--                                        data-sample-preservewhitespace--}}
-{{--                                    ></v-textarea>--}}
-                                    <textarea id="editor1" v-model="description" data-sample-preservewhitespace></textarea>
+                                    <textarea id="editor2" v-model="description" data-sample-preservewhitespace></textarea>
                                 </div>
                             </div>
                         </v-card-text>
@@ -69,12 +61,12 @@
                                     align="center"
                                     justify="start"
                                 >
-                                    <v-btn class="ma-2" tile outlined color="primary"  @click="save(1)">
+                                    <v-btn class="ma-2" tile outlined color="primary"  @click="updatePost(1)">
                                         <v-icon left>save</v-icon>
                                         Public
                                     </v-btn>
 
-                                    <v-btn class="ma-2" tile outlined color="#E64A19" @click="save(0)">
+                                    <v-btn class="ma-2" tile outlined color="#E64A19" @click="updatePost(0)">
                                         <v-icon left>save</v-icon>
                                         Private
                                     </v-btn>

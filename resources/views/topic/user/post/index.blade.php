@@ -140,10 +140,10 @@
                                                 <v-btn text icon color="#F44336">
                                                     <v-icon class="mr-1">mdi-heart</v-icon>
                                                 </v-btn>
-                                                <span class="subheading mr-2">256</span>
+                                                <span class="subheading mr-2" v-text="topic.likes"></span>
                                                 <span class="mr-1">·</span>
                                                 <v-icon class="mr-1">remove_red_eye</v-icon>
-                                                <span class="subheading mr-2">45</span>
+                                                <span class="subheading mr-2" v-text="topic.views"></span>
                                                 <span class="mr-1">·</span>
                                                 <v-btn text icon color="indigo">
                                                     <v-icon class="mr-1">mdi-share-variant</v-icon>
@@ -448,6 +448,24 @@
                         }.bind(this),100);
 
                     });
+                },
+
+                savePost: function(status) {
+                    let _this = this;
+
+                    this.topicDetails.description = CKEDITOR.instances['editor1'].getData();
+
+                    let attributes = {
+                        'category_id': this.topicDetails.categoryId,
+                        'title': this.topicDetails.title,
+                        'description': this.topicDetails.description,
+                        'status': status
+                    };
+
+                    axios.post('/api/topic', attributes).then(function (response) {
+                        _this.searchTopics();
+                        _this.postDialog = false;
+                    })
                 },
             }
         })

@@ -53,6 +53,8 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
+        $topic->increment('views');
+
         $categories = Category::all();
         return view('topic.details.index', compact('topic', 'categories'));
     }

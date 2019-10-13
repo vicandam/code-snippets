@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <template>
         <v-container fluid class="mt-12 pt-12 grey lighten-5">
@@ -47,9 +48,6 @@
                             >
                                 <div
                                     class="pa-2 text-right">
-{{--                                    <v-btn tile outlined dark color="#E64A19">--}}
-{{--                                        <v-icon left>mdi-pencil</v-icon> Post answer--}}
-{{--                                    </v-btn>--}}
                                     @include('topic.post.modal.create')
                                 </div>
                             </v-col>
@@ -104,10 +102,10 @@
                                             <v-btn text icon color="#F44336">
                                                 <v-icon class="mr-1">mdi-heart</v-icon>
                                             </v-btn>
-                                            <span class="subheading mr-2">256</span>
+                                            <span class="subheading mr-2" v-text="likes"></span>
                                             <span class="mr-1">·</span>
                                             <v-icon class="mr-1">remove_red_eye</v-icon>
-                                            <span class="subheading mr-2">45</span>
+                                            <span class="subheading mr-2" v-text="views"></span>
                                             <span class="mr-1">·</span>
                                             <v-btn text icon color="indigo">
                                                 <v-icon class="mr-1">mdi-share-variant</v-icon>
@@ -119,7 +117,7 @@
                                                     <v-icon dark>edit</v-icon>
                                                 </v-btn>
 
-                                                <v-btn class="mx-1" fab dark x-small color="error">
+                                                <v-btn class="mx-1" fab dark x-small color="error" @click="delete_dialog = true">
                                                     <v-icon dark>delete_forever</v-icon>
                                                 </v-btn>
                                             </div>
@@ -136,6 +134,7 @@
     </template>
 
     @include('topic.details.modal.edit')
+    @include('topic.details.modal.delete')
 @endsection
 
 @push('scripts')
@@ -153,6 +152,8 @@
                 description: @json($topic->description),
                 topicId: @json($topic->id),
                 createdAt: @json($topic->created_at),
+                likes: @json($topic->likes),
+                views: @json($topic->views),
 
                 postDialog: false,
                 page: 1,
@@ -165,6 +166,24 @@
                     title: '',
                     description: ''
                 },
+
+                isLoading:             false,
+                delete_dialog:         false,
+
+                categoryResponse: {
+                    timer:                 null,
+                    categoryCount: 0,
+                    currentPage: 0,
+                    lastPages: 0,
+                    previousPageUrl: 0,
+                    nextPageUrl: 0,
+
+                    filter: {
+                        keyword: '',
+                        paginate: 8,
+                        searchBy: 'filter',
+                    },
+                }
             }),
 
             mounted () {
@@ -186,23 +205,29 @@
                             height: 356
                         };
 
-                        CKEDITOR.replace('editor1', config);
+                        CKEDITOR.replace('editor2', config);
 
                     }.bind(this),100);
 
                     });
                 },
 
-                save(status) {
+                deleteProceed() {
+                    axios.delete('/api/topic/' + this.topicId).then(function (response) {
+                        window.history.back();
+                    })
+                },
+
+                updatePost: function(status) {
                     let _this = this;
-                    this.description = CKEDITOR.instances['editor1'].getData();
+                    this.description = CKEDITOR.instances['editor2'].getData();
                     let attributes = {
                         'category_id': this.categoryId,
                         'title': this.title,
                         'description': this.description,
                         'status': status
                     };
-                    console.log(this.description);
+
                     axios.patch('/api/topic/' + this.topicId, attributes).then(function (response) {
 
                         location.reload(true);
@@ -229,6 +254,25 @@
                         }.bind(this),100);
 
                     });
+                },
+
+                savePost: function(status) {
+                    let _this = this;
+
+                    this.topicDetails.description = CKEDITOR.instances['editor1'].getData();
+
+                    let attributes = {
+                        'category_id': this.topicDetails.categoryId,
+                        'title': this.topicDetails.title,
+                        'description': this.topicDetails.description,
+                        'status': status
+                    };
+
+                    axios.post('/api/topic', attributes).then(function (response) {
+                        window.open('/', '_self');
+
+                        _this.postDialog = false;
+                    })
                 },
             }
         })
