@@ -200,24 +200,23 @@
                     let _this = this;
                     this.edit_dialog = true;
 
-                    this.$nextTick(() => {
-                        _this.categoryId = _this.categoryId;
-
-                        console.log('_this.categoryId',_this.categoryId);
-
-                        setTimeout(function () {
-
-                            var config = {
-                                extraPlugins: 'codesnippet',
-                                codeSnippet_theme: 'dark',
-                                height: 356
-                            };
-
-                            CKEDITOR.replace('editor2', config);
-
-                        }.bind(this), 100);
-
-                    });
+                    // this.$nextTick(() => {
+                    //
+                    //     console.log('_this.categoryId',_this.categoryId);
+                    //
+                    //     setTimeout(function () {
+                    //
+                    //         var config = {
+                    //             extraPlugins: 'codesnippet',
+                    //             codeSnippet_theme: 'dark',
+                    //             height: 356
+                    //         };
+                    //
+                    //         CKEDITOR.replace('editor2', config);
+                    //
+                    //     }.bind(this), 100);
+                    //
+                    // });
                 },
 
                 deleteProceed() {
