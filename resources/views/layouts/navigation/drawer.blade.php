@@ -39,7 +39,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item @click="">
+            <v-list-item href="{{ route('blog.index') }}">
                 <v-list-item-action>
                     <v-icon>library_books</v-icon>
                 </v-list-item-action>
