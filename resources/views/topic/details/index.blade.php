@@ -193,7 +193,6 @@
 
             mounted() {
                 this.loadCategories = this.categories;
-                this.categoryId = categories.id;
             },
 
             methods: {
@@ -243,6 +242,7 @@
                 },
 
                 postTopicModal: function () {
+                    this.categoryId = this.categories.id;
                     this.postDialog = true;
 
                     this.$nextTick(() => {
