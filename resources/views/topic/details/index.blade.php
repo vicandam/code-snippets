@@ -15,7 +15,7 @@
                             <v-col
                                 cols="12"
                                 sm="6"
-                                md="8"
+                                md="6"
                             >
 
                                 <v-row no-gutters>
@@ -36,26 +36,24 @@
                                         sm="6"
                                         md="6"
                                     >
-                                        <div class="pt-2 pb-2 text-right">
-                                                <v-btn tile outlined dark color="#E64A19">
-                                                    <v-icon left>home</v-icon> Home
-                                                </v-btn>
-                                                <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>collections_bookmark</v-icon> My post
-                                                </v-btn>
-                                            </div>
-                                        </div>
+                                    {{-- blank --}}
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col
                                 cols="12"
                                 sm="6"
-                                md="4"
+                                md="6"
                             >
                                 <div
                                     class="pa-2 text-right">
-                                    <v-btn class="ma-1" tile outlined dark color="#E64A19">
+                                    <v-btn tile outlined dark color="#E64A19">
+                                        <v-icon left>home</v-icon> Home
+                                    </v-btn>
+                                    <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
+                                        <v-icon left>collections_bookmark</v-icon> My post
+                                    </v-btn>
+                                    <v-btn tile outlined dark color="#E64A19">
                                         <v-icon left>mdi-pencil</v-icon> Post answer
                                     </v-btn>
                                 </div>
@@ -68,8 +66,6 @@
             <v-row no-gutters>
                 <v-col
                     cols="12"
-                    sm="6"
-                    md="8"
                 >
                     <v-card
                         class="pa-2"
@@ -103,7 +99,7 @@
                                         </v-list-item-avatar>
 
                                         <v-list-item-content>
-                                            <v-list-item-subtitle>Created 2 months ago by vic</v-list-item-subtitle>
+                                            <v-list-item-subtitle> Created @{{ createdAt }} by me</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-row
@@ -141,13 +137,6 @@
 
                     </v-card>
                 </v-col>
-
-                <v-col
-                    cols="6"
-                    md="4"
-                >
-                    @include('topic.categories.index')
-                </v-col>
             </v-row>
         </v-container>
     </template>
@@ -168,6 +157,7 @@
                 title: @json($topic->title),
                 description: @json($topic->description),
                 topicId: @json($topic->id),
+                createdAt: @json($topic->created_at),
 
                 page: 1,
                 items: [],

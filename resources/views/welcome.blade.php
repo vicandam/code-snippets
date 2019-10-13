@@ -21,8 +21,8 @@
                                 <v-row no-gutters>
                                     <v-col
                                         cols="12"
-                                        sm="6"
-                                        md="6"
+                                        sm="12"
+                                        md="4"
                                     >
                                         <div class="pa-4">
                                             <div class="text-left">
@@ -33,8 +33,8 @@
 
                                     <v-col
                                         cols="12"
-                                        sm="6"
-                                        md="6"
+                                        sm="12"
+                                        md="8"
                                     >
                                         <div class="pt-2 pb-2">
                                             <div class=" text-right">
@@ -48,7 +48,7 @@
                                                 </v-btn>
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19" href="{{ url('topic-my-posts') }}">
                                                     <v-icon left>collections_bookmark</v-icon>
-                                                    Yours
+                                                    My post
                                                 </v-btn>
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@
                                             </v-list-item-avatar>
 
                                             <v-list-item-content>
-                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} by <span v-if="topic.user != null" v-text="topic.user.name"></span></v-list-item-subtitle>
+                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} <span v-if="topic.user != null" v-text="'by'+ topic.user.name"></span></v-list-item-subtitle>
                                             </v-list-item-content>
 
                                             <v-row
@@ -244,6 +244,7 @@
                     nextPageUrl: 0,
 
                     filter: {
+                        categoryId: 0,
                         keyword: '',
                         paginate: 5,
                         searchBy: 'filter',
@@ -421,6 +422,11 @@
                             });
                         }
                     });
+                },
+
+                showCategory:function(categoryId){
+                    this.topicResponse.filter.categoryId = categoryId;
+                    this.searchTopics();
                 },
 
                 viewTopic: function (topicId) {

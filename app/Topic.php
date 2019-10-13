@@ -15,7 +15,7 @@ class Topic extends Model
     public function getCreatedAtAttribute($date)
     {
         $date = Carbon::parse($date);
-        $elapsed = $date->diffForHumans(Carbon::now());
+        $elapsed = $date->diffForHumans();
 
         return $elapsed;
     }
