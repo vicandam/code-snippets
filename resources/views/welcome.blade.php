@@ -136,7 +136,7 @@
                                             </v-list-item-avatar>
 
                                             <v-list-item-content>
-                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} <span v-if="topic.user != null" v-text="'by'+ topic.user.name"></span></v-list-item-subtitle>
+                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} <span v-if="topic.user != null" v-text="'by '+ topic.user.name"></span></v-list-item-subtitle>
                                             </v-list-item-content>
 
                                             <v-row
@@ -162,14 +162,7 @@
                             </div>
                         </template>
 
-                        <template v-if="isLoading">
-                            <div class="text-center">
-                                <v-progress-circular
-                                    indeterminate
-                                    color="amber"
-                                ></v-progress-circular>
-                            </div>
-                        </template>
+                        @include('spinner.index')
 
                         <template v-if="topicResponse.topicCount == 0 && isLoading == false">
                             <div class="pa-3">

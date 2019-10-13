@@ -12,7 +12,11 @@
                 <div class="v-responsive__content" style="width: 131px;"></div>
             </div>
         </a>
-        <div class="v-toolbar__title hidden-xs-only">Snippets</div>
+        <div class="v-toolbar__title hidden-xs-only">
+            <a href="/" class="v-btn v-btn--flat v-btn--text theme--dark text-lowercase font-weight-light">
+                nippets
+            </a>
+        </div>
         <div class="spacer"></div>
 
         <div class="v-toolbar__items">

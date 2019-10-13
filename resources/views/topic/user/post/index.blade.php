@@ -156,14 +156,7 @@
                             </div>
                         </template>
 
-                        <template v-if="isLoading">
-                            <div class="text-center">
-                                <v-progress-circular
-                                    indeterminate
-                                    color="amber"
-                                ></v-progress-circular>
-                            </div>
-                        </template>
+                        @include('spinner.index')
 
                         <template v-if="topicCount == 0 && isLoading == false">
                             <div class="pa-3">
