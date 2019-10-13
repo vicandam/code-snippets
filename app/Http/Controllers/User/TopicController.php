@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Category;
 use App\Topic;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TopicController extends Controller
 {
@@ -15,8 +16,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
-
+        return view('topic.user.post.index');
     }
 
     public function userPost()

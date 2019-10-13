@@ -39,6 +39,26 @@ class TopicTest extends TestCase
         $this->assertCount(1, $response->getOriginalContent() ['data']['topics']);
     }
 
+    public function test_logon_user_can_view_his_post_test()
+    {
+        $this->factory
+            ->createUser()
+            ->signIn($this)
+            ->createTopic(2)
+            ->createCategory(1);
+
+        $attributes = [
+            'paginate' => 10,
+            'page' => 1
+        ];
+
+        $response = $this->get('api/user-post?' . http_build_query($attributes));
+
+        $response->assertOk();
+
+//        $this->assertCount(1, $response->getOriginalContent() ['data']['topics']);
+    }
+
     public function test_logon_user_can_update_topic_test()
     {
         $this->factory

@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Library;
 
+use App\Category;
 use App\Topic;
 use App\User;
 use Tests\TestCase;
@@ -8,6 +9,8 @@ use Tests\TestCase;
 class TestFactory extends TestCase
 {
     public $topic, $topics;
+    public $category, $categories;
+    public $user, $users;
 
     public function signIn($system)
     {
@@ -42,6 +45,23 @@ class TestFactory extends TestCase
 
             $this->createInstance('topics', $this->topics);
         }
+
+        return $this;
+    }
+
+    public function createCategory($total = 1, $attr = [])
+    {
+        if ($total == 1) {
+            $this->category = factory(Category::class)->create($attr);
+
+            $this->createInstance('category', $this->category);
+        } else {
+            $this->categories = factory(Category::class, $total)->create($attr);
+
+            $this->createInstance('categories', $this->categories);
+        }
+
+        return $this;
     }
 
     /**
