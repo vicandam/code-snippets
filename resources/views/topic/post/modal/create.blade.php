@@ -8,7 +8,7 @@
             <template v-slot:activator="{ on }">
 
                 @if(url()->current() == $actual_link.'/topic/'. $topicId)
-                    <v-btn class="ma-1" tile outlined dark color="#E64A19">
+                    <v-btn class="ma-1" tile outlined dark color="#E64A19" href="/">
                         <v-icon left>home</v-icon>
                         Home
                     </v-btn>

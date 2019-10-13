@@ -37,7 +37,7 @@
                                         sm="6"
                                         md="6"
                                     >
-                                    {{-- blank --}}
+                                        {{-- blank --}}
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -75,11 +75,13 @@
                                 flat
                             >
                                 <v-card-title>
-                                    <span class="title"><span class="headline font-weight-bold">Solution:</span><span v-text="title"></span></span>
+                                    <span class="title"><span class="headline font-weight-bold">Solution:</span><span
+                                            v-text="title"></span></span>
                                 </v-card-title>
 
                                 <v-card-text class="mt-5 font-weight-normal">
-                                    <pre class="line-numbers" v-html="description" data-start="-5" style="white-space:pre-wrap;"></pre>
+                                    <pre class="line-numbers" v-html="description" data-start="-5"
+                                         style="white-space:pre-wrap;"></pre>
                                 </v-card-text>
 
                                 <v-card-actions>
@@ -112,15 +114,18 @@
                                             </v-btn>
                                             <span class="subheading mr-2">45</span>
 
-                                            <div class="ml-8">
-                                                <v-btn  fab dark x-small color="primary" @click="edit">
-                                                    <v-icon dark>edit</v-icon>
-                                                </v-btn>
+                                            @if(auth()->id() == $topic->user_id)
+                                                <div class="ml-8">
+                                                    <v-btn fab dark x-small color="primary" @click="edit">
+                                                        <v-icon dark>edit</v-icon>
+                                                    </v-btn>
 
-                                                <v-btn class="mx-1" fab dark x-small color="error" @click="delete_dialog = true">
-                                                    <v-icon dark>delete_forever</v-icon>
-                                                </v-btn>
-                                            </div>
+                                                    <v-btn class="mx-1" fab dark x-small color="error"
+                                                           @click="delete_dialog = true">
+                                                        <v-icon dark>delete_forever</v-icon>
+                                                    </v-btn>
+                                                </div>
+                                            @endif
                                         </v-row>
                                     </v-list-item>
                                 </v-card-actions>
@@ -167,11 +172,11 @@
                     description: ''
                 },
 
-                isLoading:             false,
-                delete_dialog:         false,
+                isLoading: false,
+                delete_dialog: false,
 
                 categoryResponse: {
-                    timer:                 null,
+                    timer: null,
                     categoryCount: 0,
                     currentPage: 0,
                     lastPages: 0,
@@ -186,7 +191,7 @@
                 }
             }),
 
-            mounted () {
+            mounted() {
                 this.loadCategories = this.categories;
             },
 
@@ -197,17 +202,17 @@
 
                     this.$nextTick(() => {
 
-                    setTimeout(function(){
+                        setTimeout(function () {
 
-                        var config = {
-                            extraPlugins: 'codesnippet',
-                            codeSnippet_theme: 'dark',
-                            height: 356
-                        };
+                            var config = {
+                                extraPlugins: 'codesnippet',
+                                codeSnippet_theme: 'dark',
+                                height: 356
+                            };
 
-                        CKEDITOR.replace('editor2', config);
+                            CKEDITOR.replace('editor2', config);
 
-                    }.bind(this),100);
+                        }.bind(this), 100);
 
                     });
                 },
@@ -218,7 +223,7 @@
                     })
                 },
 
-                updatePost: function(status) {
+                updatePost: function (status) {
                     let _this = this;
                     this.description = CKEDITOR.instances['editor2'].getData();
                     let attributes = {
@@ -236,12 +241,12 @@
                     })
                 },
 
-                postTopicModal:function () {
+                postTopicModal: function () {
                     this.postDialog = true;
 
                     this.$nextTick(() => {
 
-                        setTimeout(function(){
+                        setTimeout(function () {
 
                             var config = {
                                 extraPlugins: 'codesnippet',
@@ -251,12 +256,12 @@
 
                             CKEDITOR.replace('editor1', config);
 
-                        }.bind(this),100);
+                        }.bind(this), 100);
 
                     });
                 },
 
-                savePost: function(status) {
+                savePost: function (status) {
                     let _this = this;
 
                     this.topicDetails.description = CKEDITOR.instances['editor1'].getData();

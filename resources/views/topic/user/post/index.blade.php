@@ -38,6 +38,10 @@
                                     >
                                         <div class="pt-2 pb-2">
                                             <div class=" text-right">
+                                                <v-btn class="ma-1" tile outlined dark color="#E64A19" href="/">
+                                                    <v-icon left>home</v-icon>
+                                                    Home
+                                                </v-btn>
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
                                                     <v-icon left>whatshot</v-icon>
                                                     Latest
