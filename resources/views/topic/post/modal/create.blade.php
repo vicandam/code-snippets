@@ -73,12 +73,14 @@
                                             v-model="topicDetails.categoryId"
                                             item-value="id"
                                             item-text="category_name"
+                                            autocomplete = "off"
                                         ></v-autocomplete>
 
                                         <v-text-field
                                             label="Title"
                                             required
                                             v-model="topicDetails.title"
+                                            autocomplete = "off"
                                         ></v-text-field>
 
                                         <div class="text-center">

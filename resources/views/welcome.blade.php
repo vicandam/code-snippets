@@ -217,9 +217,13 @@
 
 @push('scripts')
     <script>
+        Vue.use(VeeValidate);
         new Vue({
             el: '#app',
             vuetify: new Vuetify(),
+            $_veeValidate: {
+                validator: 'new'
+            },
             data: () => ({
                 drawer: true,
                 page: 1,
@@ -250,7 +254,7 @@
                     filter: {
                         categoryId: 0,
                         keyword: '',
-                        paginate: 5,
+                        paginate: 10,
                         searchBy: 'filter',
                     },
                 },

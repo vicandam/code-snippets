@@ -54,7 +54,7 @@
                                 label="{{ __('E-Mail Address') }}"
                                 name="email" value="{{ old('email') }}"
                                 autocomplete="email"
-                                prepend-icon="person"
+                                prepend-icon="email"
                                 type="email"
                                 required
                                 @error('email')
@@ -91,7 +91,7 @@
                         <v-card-actions>
                             <div class="flex-grow-1"></div>
                             <v-btn type="submit" class="ma-1" tile outlined dark color="#E64A19">
-                                {{ __('Register') }}
+                                <v-icon left>fingerprint</v-icon> {{ __('Register') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>

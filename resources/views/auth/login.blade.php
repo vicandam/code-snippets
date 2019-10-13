@@ -83,7 +83,9 @@
                         </v-card-text>
                         <v-card-actions>
                             <div class="flex-grow-1"></div>
-                            <v-btn type="submit" tile outlined dark color="#E64A19">Login</v-btn>
+                            <v-btn type="submit" tile outlined dark color="#E64A19">
+                                <v-icon left>fingerprint</v-icon> Login
+                            </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-form>
