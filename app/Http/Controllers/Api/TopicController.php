@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\TopicUpdateRequest;
 use App\Topic;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TopicController extends Controller
 {
@@ -19,6 +20,38 @@ class TopicController extends Controller
         $input = $request;
 
         $topics = new Topic();
+
+        if (!empty($input['keyword'])) {
+            $topics = $topics->searchFilter($input['keyword']);
+        }
+
+        $topics = $topics->with(['category', 'user']);
+
+        $topics = $topics->orderBy('id', 'desc');
+
+        $topics = $topics->paginate($input['paginate']);
+
+        $categories = Category::all();
+
+        $result = [
+            'message' => 'Topics successfully retrieve',
+            'data' => [
+                'topics' => $topics,
+                'topic_count' => $topics->count(),
+                'categories' => $categories
+            ]
+        ];
+
+        return response()->json( $result, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function showUserPost(Request $request)
+    {
+        $input = $request;
+
+        $topics = new Topic();
+
+        $topics = $topics->where('user_id', auth()->id());
 
         if (!empty($input['keyword'])) {
             $topics = $topics->searchFilter($input['keyword']);
