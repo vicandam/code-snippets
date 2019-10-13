@@ -139,16 +139,27 @@
                                             </v-list-item-avatar>
 
                                             <v-list-item-content>
-                                                <v-list-item-subtitle class="font-italic" style="text-transform: initial;">Created @{{ topic.created_at }} <span v-if="topic.user != null" v-text="'by '+ topic.user.name"></span></v-list-item-subtitle>
+                                                <v-list-item-subtitle class="font-italic"
+                                                                      style="text-transform: initial;">Created @{{
+                                                    topic.created_at }} <span v-if="topic.user != null"
+                                                                              v-text="'by '+ topic.user.name"></span>
+                                                </v-list-item-subtitle>
                                             </v-list-item-content>
 
                                             <v-row
                                                 align="center"
                                                 justify="end"
                                             >
-                                                <v-btn text icon color="#F44336">
-                                                    <v-icon class="mr-1">mdi-heart</v-icon>
-                                                </v-btn>
+                                                @auth
+                                                    <v-btn text icon color="#F44336" @click="onLike(topic.id)">
+                                                        <v-icon class="mr-1">mdi-heart</v-icon>
+                                                    </v-btn>
+                                                @endauth
+                                                @guest
+                                                    <v-btn text icon color="#F44336" href="{{ route('login') }}">
+                                                        <v-icon class="mr-1">mdi-heart</v-icon>
+                                                    </v-btn>
+                                                @endguest
                                                 <span class="subheading mr-2" v-text="topic.likes"></span>
                                                 <span class="mr-1">·</span>
                                                 <v-icon class="mr-1">remove_red_eye</v-icon>
@@ -475,6 +486,12 @@
                         _this.postDialog = false;
                     })
                 },
+
+                onLike(id) {
+                    axios.post('/api/like/' + id).then((response) => {
+                        this.searchTopics();
+                    })
+                }
             }
         })
     </script>
