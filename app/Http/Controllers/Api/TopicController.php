@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Category;
+use App\Http\Requests\TopicStoreRequest;
 use App\Http\Requests\TopicUpdateRequest;
 use App\Topic;
 use Illuminate\Http\Request;
@@ -105,9 +106,28 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TopicStoreRequest $request)
     {
-        //
+        $input = $request;
+
+        $topic = new Topic();
+
+        $topic->user_id     = $input['user_id'];
+        $topic->category_id = $input['category_id'];
+        $topic->title       = $input['title'];
+        $topic->description = $input['description'];
+        $topic->is_public   = $input['status'];
+
+        $topic->save();
+
+        $result = [
+            'message' => 'Topic successfully added',
+            'data'    => [
+                'topic' => $topic
+            ]
+        ];
+
+        return response()->json( $result, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -151,7 +171,7 @@ class TopicController extends Controller
         $topic->save();
 
         $result = [
-            'message' => 'Topic successfully added',
+            'message' => 'Topic successfully updated',
             'data'    => [
                 'topic' => $topic
             ]
