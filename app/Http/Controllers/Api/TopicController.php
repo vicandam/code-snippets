@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Category;
 use App\Http\Requests\TopicStoreRequest;
 use App\Http\Requests\TopicUpdateRequest;
+use App\Like;
 use App\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
@@ -178,6 +180,34 @@ class TopicController extends Controller
         ];
 
         return response()->json( $result, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function like($id)
+    {
+        if (Auth::user()) {
+            $input['user_id'] = auth()->id();
+            $input['topic_id'] = $id;
+
+            $like = Like::where('topic_id', $id)
+                ->where('user_id', auth()->id())
+                ->first();
+
+            if ($like) {
+                Topic::find($id)->decrement('likes');
+
+                Like::find($like->id)->delete();
+                $message = 'unliked';
+            } else {
+                Topic::find($id)->increment('likes');
+
+                Like::create($input);
+                $message = 'liked';
+            }
+
+            $topic = Topic::find($id);
+
+            return response()->json(['isLikeSuccessfull' => $topic->likes, 'message' => $message]);
+        }
     }
 
     /**
