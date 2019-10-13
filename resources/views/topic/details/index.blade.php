@@ -197,10 +197,13 @@
 
             methods: {
                 edit() {
+                    let _this = this;
                     this.edit_dialog = true;
-                    // this.description = this.description;
 
                     this.$nextTick(() => {
+                        _this.categoryId = _this.categoryId;
+
+                        console.log('_this.categoryId',_this.categoryId);
 
                         setTimeout(function () {
 
@@ -225,6 +228,7 @@
 
                 updatePost: function (status) {
                     let _this = this;
+
                     this.description = CKEDITOR.instances['editor2'].getData();
                     let attributes = {
                         'category_id': this.categoryId,
@@ -242,7 +246,6 @@
                 },
 
                 postTopicModal: function () {
-                    this.categoryId = this.categories.id;
                     this.postDialog = true;
 
                     this.$nextTick(() => {
