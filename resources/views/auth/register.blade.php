@@ -28,7 +28,7 @@
                     @csrf
                     <v-card class="elevation-12">
                         <v-toolbar
-                            color="primary"
+                            color="#765d55"
                             dark
                             flat
                         >
@@ -37,6 +37,7 @@
                         <v-card-text>
                             <v-text-field
                                 label="Name"
+                                color="#E64A19"
                                 name="name" value="{{ old('name') }}"
                                 autocomplete="name"
                                 autofocus
@@ -49,6 +50,7 @@
                             ></v-text-field>
 
                             <v-text-field
+                                color="#E64A19"
                                 label="{{ __('E-Mail Address') }}"
                                 name="email" value="{{ old('email') }}"
                                 autocomplete="email"
@@ -61,6 +63,7 @@
                             ></v-text-field>
 
                             <v-text-field
+                                color="#E64A19"
                                 id="password"
                                 label="{{ __('Password') }}"
                                 name="password"
@@ -74,6 +77,7 @@
                             ></v-text-field>
 
                             <v-text-field
+                                color="#E64A19"
                                 id="password-confirm"
                                 label="{{ __('Confirm Password') }}"
                                 name="password_confirmation"
@@ -86,7 +90,9 @@
                         </v-card-text>
                         <v-card-actions>
                             <div class="flex-grow-1"></div>
-                            <v-btn type="submit" color="primary">{{ __('Register') }}</v-btn>
+                            <v-btn type="submit" class="ma-1" tile outlined dark color="#E64A19">
+                                {{ __('Register') }}
+                            </v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-form>
