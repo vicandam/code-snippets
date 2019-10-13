@@ -30,6 +30,7 @@
                     <v-list-item
                         v-for="(category, i) in categories.data"
                         :key="i"
+                        @click="showCategory(category.id)"
                     >
                         <v-list-item-avatar color="grey darken-3">
                             <v-img

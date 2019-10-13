@@ -49,9 +49,15 @@ class TopicController extends Controller
     {
         $input = $request;
 
+        $categoryId = $request['categoryId'];
+
         $topics = new Topic();
 
         $topics = $topics->where('user_id', auth()->id());
+
+        if ($categoryId > 0) {
+            $topics = $topics->where('category_id', $categoryId);
+        }
 
         if (!empty($input['keyword'])) {
             $topics = $topics->searchFilter($input['keyword']);

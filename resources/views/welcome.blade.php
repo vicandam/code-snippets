@@ -425,9 +425,6 @@
 
                 viewTopic: function (topicId) {
                     window.open('/topic/'+ topicId, '_self');
-                },
-                myTopic: function () {
-                    window.open('/my-topic/my-post', '_self');
                 }
             }
         })

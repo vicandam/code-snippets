@@ -46,10 +46,6 @@
                                                     <v-icon left>stars</v-icon>
                                                     Top
                                                 </v-btn>
-                                                <v-btn class="ma-1" tile outlined dark color="#E64A19">
-                                                    <v-icon left>collections_bookmark</v-icon>
-                                                    My Post
-                                                </v-btn>
                                             </div>
                                         </div>
                                     </v-col>
@@ -240,7 +236,23 @@
                 previousPageUrl:       0,
                 nextPageUrl:           0,
 
+                categoryResponse: {
+                    timer:                 null,
+                    categoryCount: 0,
+                    currentPage: 0,
+                    lastPages: 0,
+                    previousPageUrl: 0,
+                    nextPageUrl: 0,
+
+                    filter: {
+                        keyword: '',
+                        paginate: 8,
+                        searchBy: 'filter',
+                    },
+                },
+
                 filter: {
+                    categoryId: 0,
                     keyword:               '',
                     paginate:              5,
                     searchBy:              'filter',
@@ -250,6 +262,7 @@
 
             mounted() {
                 this.searchTopics();
+                this.searchCategory();
             },
             methods: {
                 searchTopics: function () {
@@ -279,7 +292,6 @@
                             .then(function (response) {
 
                                 _this.topics          = response.data.data.topics;
-                                _this.categories      = response.data.data.categories;
                                 _this.topicCount      = response.data.data.topic_count;
                                 _this.currentPage     = response.data.data.topics.current_page;
                                 _this.lastPages       = response.data.data.topics.last_page;
@@ -325,6 +337,87 @@
                             });
                         }
                     });
+                },
+
+                searchCategory: function () {
+                    var self = this;
+                    self.categories.data = [];
+
+                    var url = "/api/category";
+                    let attributes = this.categoryResponse.filter;
+
+                    var searchParameters = new URLSearchParams();
+
+                    Object.keys(attributes).forEach(function (parameterName) {
+                        searchParameters.append(parameterName, attributes[parameterName]);
+                    });
+
+                    url = url + '/?' + searchParameters.toString();
+
+                    if (this.categoryResponse.timer) {
+                        this.isLoading = true;
+                        clearTimeout(this.categoryResponse.timer);
+                        this.categoryResponse.timer = null;
+                    }
+
+                    this.categoryResponse.timer = setTimeout(() => {
+
+                        axios.get(url)
+                            .then(function (response) {
+
+                                self.categories = response.data.data.categories;
+                                self.categoryResponse.categoryCount = response.data.data.category_count;
+                                self.categoryResponse.currentPage = response.data.data.categories.current_page;
+                                self.categoryResponse.lastPages = response.data.data.categories.last_page;
+                                self.categoryResponse.previousPageUrl = response.data.data.categories.prev_page_url;
+                                self.categoryResponse.nextPageUrl = response.data.data.categories.next_page_url;
+
+                                self.isLoading = false;
+                            });
+                    }, 800);
+                },
+
+                nextCategory (pageNumber) {
+                    var _this             = this;
+
+                    _this.categoryResponse.filter.page     = pageNumber;
+
+                    let url               = '/api/category';
+                    let attributes        = _this.categoryResponse.filter;
+
+                    var searchParameters  = new URLSearchParams();
+
+                    Object.keys(attributes).forEach(function (parameterName) {
+                        searchParameters.append(parameterName, attributes[parameterName]);
+                    });
+
+                    url  = url + '/?' + searchParameters.toString();
+
+                    axios.get(url).then(function (response) {
+
+                        console.log(response);
+
+                        _this.categoryResponse.categoryCount    = response.data.data.category_count;
+                        _this.categoryResponse.currentPage      = response.data.data.categories.current_page;
+                        _this.categoryResponse.lastPages        = response.data.data.categories.last_page;
+                        _this.categoryResponse.previousPageUrl  = response.data.data.categories.prev_page_url;
+                        _this.categoryResponse.nextPageUrl      = response.data.data.categories.next_page_url;
+
+                        if (response.data.data.categories.data) {
+
+                            _this.categories.data  = [];
+
+                            response.data.data.categories.data.filter(function (category) {
+
+                                _this.categories.data.push(category);
+                            });
+                        }
+                    });
+                },
+
+                showCategory:function(categoryId){
+                    this.filter.categoryId = categoryId;
+                    this.searchTopics();
                 },
 
                 viewTopic: function (topicId) {
