@@ -27,7 +27,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item @click="">
+            <v-list-item href="{{ route('developer.index') }}">
                 <v-list-item-action>
                     <v-icon>developer_board</v-icon>
                 </v-list-item-action>

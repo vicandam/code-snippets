@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('topic', 'TopicController');
+Route::resource('developer', 'DeveloperController');
 Route::get('/topic-my-posts', 'TopicController@userPost');
 
 Route::name('api.')->prefix('api')->group(function () {
