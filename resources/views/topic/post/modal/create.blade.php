@@ -73,12 +73,12 @@
                                             align="center"
                                             justify="start"
                                         >
-                                            <v-btn class="ma-2" tile outlined color="primary"  @click="save(1)">
+                                            <v-btn class="ma-2" tile outlined color="primary"  @click="savePost(1)">
                                                 <v-icon left>save</v-icon>
                                                 Public
                                             </v-btn>
 
-                                            <v-btn class="ma-2" tile outlined color="#E64A19" @click="save(0)">
+                                            <v-btn class="ma-2" tile outlined color="#E64A19" @click="savePost(0)">
                                                 <v-icon left>save</v-icon>
                                                 Private
                                             </v-btn>

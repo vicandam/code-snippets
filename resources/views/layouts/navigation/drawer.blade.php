@@ -15,7 +15,7 @@
             ></v-divider>
 
             <v-list-item
-                @click=""
+                :href="'{{ url('/') }}'"
             >
                 <v-list-item-action>
                     <v-icon>home</v-icon>

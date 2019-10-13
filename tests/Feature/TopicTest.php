@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Topic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Library\TestFactory;
@@ -72,7 +73,7 @@ class TopicTest extends TestCase
             'status' => 1
         ];
 
-        $response = $this->post('api/topic/', $attributes);
+        $response = $this->post('api/topic', $attributes);
 
         $response->assertStatus(200);
 
@@ -98,5 +99,17 @@ class TopicTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertEquals($attributes['title'], $response->getOriginalContent()['data']['topic']['title'] );
+    }
+
+    public function test_logon_user_can_delete_topic_test()
+    {
+        $this->factory
+            ->createUser()
+            ->signIn($this)
+            ->createTopic();
+
+        $this->delete('api/topic/' . $this->factory->topic->id);
+
+        $this->assertTrue(Topic::where('id', $this->factory->topic->id)->count() == 0 );
     }
 }

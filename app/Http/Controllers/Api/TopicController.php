@@ -112,7 +112,7 @@ class TopicController extends Controller
 
         $topic = new Topic();
 
-        $topic->user_id     = $input['user_id'];
+        $topic->user_id     = auth()->id();
         $topic->category_id = $input['category_id'];
         $topic->title       = $input['title'];
         $topic->description = $input['description'];
@@ -188,6 +188,6 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        $topic->delete();
     }
 }
