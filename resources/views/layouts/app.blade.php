@@ -23,26 +23,26 @@
     @stack('styles')
 </head>
 <body>
-    <div id="app">
-        <v-app v-cloak>
+<div id="app">
+    <v-app v-cloak>
 
-            @include('layouts.navigation.header')
-            @include('layouts.navigation.drawer')
+        @include('layouts.navigation.header')
+        @include('layouts.navigation.drawer')
 
-            <v-content>
-                @yield('content')
-            </v-content>
-        </v-app>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-{{--    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>--}}
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.14/dist/vee-validate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
-    <script src="{{ asset('js/summernote.min.js') }}"></script>
-    <script src="{{ asset('js/prism.js') }}"></script>
+        <v-content>
+            @yield('content')
+        </v-content>
+    </v-app>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+@if(env('APP_ENV') == 'local') { <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>}
+@else <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>@endif
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.14/dist/vee-validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
+<script src="{{ asset('js/summernote.min.js') }}"></script>
+<script src="{{ asset('js/prism.js') }}"></script>
 @stack('scripts')
 </body>
 </html>
