@@ -199,10 +199,12 @@
             watch: {
                 edit_dialog: function (val) {
                     console.log(val);
-                    if(val == true) {
-                        console.log('dialog', this.categoryId);
-                        this.categoryId = this.selectedCategoryId;
-                    }
+                    setTimeout(function () {
+                        if (val == true) {
+                            console.log('dialog', this.categoryId);
+                            this.categoryId = this.selectedCategoryId;
+                        }
+                    }.bind(this), 9000);
                 }
             },
 
@@ -210,7 +212,6 @@
                 edit() {
                     let _this = this;
                     this.edit_dialog = true;
-                    this.categoryId = this.selectedCategoryId;
 
                     this.$nextTick(() => {
 
