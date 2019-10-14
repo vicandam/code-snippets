@@ -62,7 +62,7 @@
                             </form>
                         </v-list-item>
 
-                        <v-list-item href="user-setting">
+                        <v-list-item href="/user-setting">
                             <v-list-item-title>{{ __('Settings') }}</v-list-item-title>
                         </v-list-item>
                     </v-list>

@@ -26,6 +26,8 @@ class TopicController extends Controller
 
         $topics = new Topic();
 
+        $topics = $topics->where('is_public', 1);
+
         if ($categoryId > 0) {
             $topics = $topics->where('category_id', $categoryId);
         }
@@ -219,5 +221,7 @@ class TopicController extends Controller
     public function destroy(Topic $topic)
     {
         $topic->delete();
+
+        return 'true';
     }
 }
