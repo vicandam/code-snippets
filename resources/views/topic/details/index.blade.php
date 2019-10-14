@@ -198,7 +198,9 @@
 
             watch: {
                 edit_dialog: function (val) {
-                    if(!val) {
+                    console.log(val);
+                    if(val == true) {
+                        console.log('dialog', this.categoryId);
                         this.categoryId = this.selectedCategoryId;
                     }
                 }
