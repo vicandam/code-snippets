@@ -82,7 +82,7 @@
                     md="8"
                 >
                     <v-card
-                        class="pa-2"
+                        class="pa-2 mt-2"
                         outlined
                         tile
                     >
