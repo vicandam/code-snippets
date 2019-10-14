@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Category;
-use App\Topic;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class TopicController extends Controller
+class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +16,6 @@ class TopicController extends Controller
     public function index()
     {
         //
-
-    }
-
-    public function userPost()
-    {
-        return view('topic.user.post.index');
     }
 
     /**
@@ -53,48 +42,63 @@ class TopicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Topic  $topic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Topic $topic)
+    public function show($id)
     {
-        $topic->increment('views');
-
-        $categories = Category::all();
-        return view('topic.details.index', compact('topic', 'categories'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Topic  $topic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Topic $topic)
+    public function edit($id)
     {
-        $categories = Category::all();
-        return view('topic.details.edit.index', compact('topic', 'categories'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Topic  $topic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Topic $topic)
+    public function update(Request $request, $id)
     {
-        //
+        $input = $request;
+
+        $user = User::find($id);
+
+        $user->name      = $input['name'];
+        $user->email     = $input['email'];
+        if (! empty($input['password'])) {
+            $user->password  = bcrypt($input['password']);
+        }
+
+        $user->save();
+
+        $result = [
+            'message' => 'Account updated successfully',
+            'data' => [
+                'user' => $user
+            ]
+        ];
+
+        return response()->json($result, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Topic  $topic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy($id)
     {
         //
     }
