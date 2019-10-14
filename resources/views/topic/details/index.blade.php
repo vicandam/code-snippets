@@ -153,7 +153,7 @@
                 edit_dialog: false,
                 categoryId: 1,
                 selectedCategoryId: @json($topic->category_id),
-                categories: @json($categories),
+                categories: [],
                 title: @json($topic->title),
                 description: @json($topic->description),
                 topicId: @json($topic->id),
@@ -194,21 +194,33 @@
 
             mounted() {
                 this.loadCategories = this.categories;
+                this.getAllCategories();
             },
 
             watch: {
                 edit_dialog: function (val) {
+                    let _this = this;
                     console.log(val);
                     setTimeout(function () {
                         if (val == true) {
-                            console.log('dialog', this.categoryId);
-                            this.categoryId = this.selectedCategoryId;
+                            console.log('dialog', _this.categoryId);
+                            this.categoryId = _this.selectedCategoryId;
                         }
                     }.bind(this), 9000);
                 }
             },
 
             methods: {
+                getAllCategories:function(){
+                    let _this = this;
+
+                        axios.get('/api/all/category/')
+                        .then(function (response) {
+                            console.log(response);
+                            _this.categories          = response.data.data.categories;
+                        });
+                },
+
                 edit() {
                     let _this = this;
                     this.edit_dialog = true;

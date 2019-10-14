@@ -34,6 +34,7 @@ Route::get('/user-setting', 'SettingController@index');
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('topic', 'Api\TopicController');
     Route::resource('category', 'Api\CategoryController');
+    Route::get('all/category', 'Api\CategoryController@getAllCategory')->name('get.all-category');
     Route::resource('user', 'Api\UserController');
 
     Route::get('user-post', 'Api\TopicController@showUserPost')->name('user.post');

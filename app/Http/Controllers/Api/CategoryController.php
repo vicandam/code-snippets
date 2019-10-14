@@ -107,4 +107,18 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function getAllCategory(Category $categories)
+    {
+        $categories = $categories->all();
+
+        $result = [
+            'data' => [
+                'categories'     => $categories,
+                'category_count' => $categories->count($categories)
+            ]
+        ];
+
+        return response()->json($result, 200, [], JSON_PRETTY_PRINT);
+    }
 }
