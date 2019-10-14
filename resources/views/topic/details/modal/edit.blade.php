@@ -44,6 +44,12 @@
                                 ></v-autocomplete>
 
                                 <v-text-field
+                                    label="Test"
+                                    required
+                                    v-model="categoryId"
+                                ></v-text-field>
+
+                                <v-text-field
                                     label="Title"
                                     required
                                     v-model="title"
