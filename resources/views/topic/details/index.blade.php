@@ -151,8 +151,8 @@
             data: () => ({
                 drawer: true,
                 edit_dialog: false,
-                categoryId: @json($topic->category_id),
-                selectedCategoryId: 1,
+                categoryId: 1,
+                selectedCategoryId: @json($topic->category_id),
                 categories: @json($categories),
                 title: @json($topic->title),
                 description: @json($topic->description),
@@ -196,11 +196,19 @@
                 this.loadCategories = this.categories;
             },
 
+            watch: {
+                edit_dialog: function (val) {
+                    if(!val) {
+                        this.categoryId = this.selectedCategoryId;
+                    }
+                }
+            },
+
             methods: {
                 edit() {
                     let _this = this;
                     this.edit_dialog = true;
-                    this.selectedCategoryId = this.categoryId;
+                    this.categoryId = this.selectedCategoryId;
 
                     this.$nextTick(() => {
 
@@ -232,7 +240,7 @@
 
                     this.description = CKEDITOR.instances['editor2'].getData();
                     let attributes = {
-                        'category_id':  this.selectedCategoryId,
+                        'category_id':  this.categoryId,
                         'title': this.title,
                         'description': this.description,
                         'status': status
