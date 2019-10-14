@@ -195,7 +195,26 @@
                 this.loadCategories = this.categories;
             },
 
+            watch: {
+                categoryId(value) {
+                    this.setItems(this.categoryId);
+                    console.log(this.categoryId);
+                }
+            },
+
             methods: {
+                setItems(value) {
+                    console.log(value);
+                    if (value && value.length > 0) {
+                        if(Array.isArray(value)) {
+                            // I'm not sure this is the best solution... But for this answer I think it's enough
+                            this.categories = value
+                        } else {
+                            this.categories.push(value)
+                        }
+                    }
+                },
+
                 edit() {
                     let _this = this;
                     this.edit_dialog = true;
@@ -206,7 +225,7 @@
 
                         setTimeout(function () {
                             _this.categoryId = _this.categoryId;
-                            
+
                             var config = {
                                 extraPlugins: 'codesnippet',
                                 codeSnippet_theme: 'dark',
