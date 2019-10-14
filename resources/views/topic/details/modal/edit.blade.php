@@ -35,11 +35,11 @@
                         <v-card-text>
                             <div>
                                 <v-autocomplete
+                                    item-value="id"
                                     label="Categories"
                                     autocomplete="off"
                                     :items="categories"
                                     v-model="categoryId"
-                                    item-value="id"
                                     item-text="category_name"
                                 ></v-autocomplete>
 

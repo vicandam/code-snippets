@@ -205,15 +205,14 @@
                 getAllCategories:function(){
                     let _this = this;
 
-                        axios.get('/api/all/category/')
-                        .then(function (response) {
-                            console.log(response);
-                            _this.categoryId     = _this.selectedCategoryId;
-                            _this.categories     = response.data.data.categories;
-                        });
+                    axios.get('/api/all/category/')
+                    .then(function (response) {
+                        _this.categoryId     = _this.selectedCategoryId;
+                        _this.categories     = response.data.data.categories;
+                    });
                 },
 
-                edit() {
+                edit:function() {
                     let _this = this;
                     _this.edit_dialog = true;
 
@@ -236,7 +235,7 @@
                     });
                 },
 
-                deleteProceed() {
+                deleteProceed:function() {
                     axios.delete('/api/topic/' + this.topicId).then(function (response) {
                         window.history.back();
                     })
@@ -300,7 +299,7 @@
                     })
                 },
 
-                onLike(id) {
+                onLike:function(id) {
                     axios.post('/api/like/' + id).then((response) => {
                         this.likes = response.data.isLikeSuccessfull;
                     })
