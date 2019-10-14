@@ -89,7 +89,7 @@
                                         <v-list-item-avatar color="grey darken-3 mt-5">
                                             <v-img
                                                 class="elevation-6"
-                                                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                                                src="/img/avatars.png"
                                             ></v-img>
                                         </v-list-item-avatar>
 
@@ -152,6 +152,7 @@
                 drawer: true,
                 edit_dialog: false,
                 categoryId: @json($topic->category_id),
+                selectedCategoryId: 1,
                 categories: @json($categories),
                 title: @json($topic->title),
                 description: @json($topic->description),
@@ -195,36 +196,17 @@
                 this.loadCategories = this.categories;
             },
 
-            watch: {
-                categoryId(value) {
-                    this.setItems(this.categoryId);
-                    console.log(this.categoryId);
-                }
-            },
-
             methods: {
-                setItems(value) {
-                    console.log(value);
-                    if (value && value.length > 0) {
-                        if(Array.isArray(value)) {
-                            // I'm not sure this is the best solution... But for this answer I think it's enough
-                            this.categories = value
-                        } else {
-                            this.categories.push(value)
-                        }
-                    }
-                },
-
                 edit() {
                     let _this = this;
                     this.edit_dialog = true;
+                    this.selectedCategoryId = this.categoryId;
 
                     this.$nextTick(() => {
 
-                        console.log('_this.categoryId',_this.categoryId);
+                        console.log('_this.categoryId', this.selectedCategoryId);
 
                         setTimeout(function () {
-                            _this.categoryId = _this.categoryId;
 
                             var config = {
                                 extraPlugins: 'codesnippet',
@@ -250,7 +232,7 @@
 
                     this.description = CKEDITOR.instances['editor2'].getData();
                     let attributes = {
-                        'category_id': this.categoryId,
+                        'category_id':  this.selectedCategoryId,
                         'title': this.title,
                         'description': this.description,
                         'status': status
