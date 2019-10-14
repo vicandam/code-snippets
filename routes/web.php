@@ -29,11 +29,12 @@ Route::resource('developer', 'DeveloperController');
 Route::resource('blog', 'BlogController');
 
 Route::get('/topic-my-posts', 'TopicController@userPost');
-
+Route::get('/user-setting', 'SettingController@index');
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('topic', 'Api\TopicController');
     Route::resource('category', 'Api\CategoryController');
+    Route::resource('user', 'Api\UserController');
 
     Route::get('user-post', 'Api\TopicController@showUserPost')->name('user.post');
 
