@@ -198,16 +198,7 @@
             },
 
             watch: {
-                edit_dialog: function (val) {
-                    let _this = this;
-                    console.log(val);
-                    setTimeout(function () {
-                        if (val == true) {
-                            console.log('dialog', _this.categoryId);
-                            this.categoryId = _this.selectedCategoryId;
-                        }
-                    }.bind(this), 9000);
-                }
+
             },
 
             methods: {
@@ -217,15 +208,16 @@
                         axios.get('/api/all/category/')
                         .then(function (response) {
                             console.log(response);
-                            _this.categories          = response.data.data.categories;
+                            _this.categoryId     = _this.selectedCategoryId;
+                            _this.categories     = response.data.data.categories;
                         });
                 },
 
                 edit() {
                     let _this = this;
-                    this.edit_dialog = true;
+                    _this.edit_dialog = true;
 
-                    this.$nextTick(() => {
+                    _this.$nextTick(() => {
 
                         console.log('_this.categoryId', this.selectedCategoryId);
 
