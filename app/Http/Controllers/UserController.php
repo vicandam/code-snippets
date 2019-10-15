@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.list');
+        if (auth()->user()->super_user) {
+            return view('user.list');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
