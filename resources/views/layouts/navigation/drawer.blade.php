@@ -39,18 +39,30 @@
                 </v-list-item-content>
             </v-list-item>
 
-            @if(isset(auth()->user()->super_user))
-                <v-list-item href="{{ route('user.index') }}">
-                    <v-list-item-action>
-                        <v-icon>supervised_user_circle</v-icon>
-                    </v-list-item-action>
+            @if(isset(auth()->user()->super_user) && auth()->user()->super_user)
+                    <v-list-item href="{{ route('user.index') }}">
+                        <v-list-item-action>
+                            <v-icon>supervised_user_circle</v-icon>
+                        </v-list-item-action>
 
-                    <v-list-item-content>
-                        <v-list-item-title class="grey--text">
-                            Users
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title class="grey--text">
+                                Users
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item href="{{ route('category.index') }}">
+                        <v-list-item-action>
+                            <v-icon>category</v-icon>
+                        </v-list-item-action>
+
+                        <v-list-item-content>
+                            <v-list-item-title class="grey--text">
+                                Categories
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
             @endif
 
             <v-list-item href="{{ route('blog.index') }}">
