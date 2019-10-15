@@ -38,7 +38,8 @@
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-            @auth
+
+            @if(isset(auth()->user()->super_user))
                 <v-list-item href="{{ route('user.index') }}">
                     <v-list-item-action>
                         <v-icon>supervised_user_circle</v-icon>
@@ -50,7 +51,8 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-            @endauth
+            @endif
+
             <v-list-item href="{{ route('blog.index') }}">
                 <v-list-item-action>
                     <v-icon>library_books</v-icon>
