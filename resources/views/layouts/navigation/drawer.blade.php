@@ -39,6 +39,18 @@
                 </v-list-item-content>
             </v-list-item>
 
+            <v-list-item href="{{ route('user.index') }}">
+                <v-list-item-action>
+                    <v-icon>supervised_user_circle</v-icon>
+                </v-list-item-action>
+
+                <v-list-item-content>
+                    <v-list-item-title class="grey--text">
+                        Users
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
             <v-list-item href="{{ route('blog.index') }}">
                 <v-list-item-action>
                     <v-icon>library_books</v-icon>
