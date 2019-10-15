@@ -25,11 +25,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('topic', 'TopicController');
 Route::resource('developer', 'DeveloperController');
+Route::resource('user', 'UserController');
 
 Route::resource('blog', 'BlogController');
 
 Route::get('/topic-my-posts', 'TopicController@userPost');
 Route::get('/user-setting', 'SettingController@index');
+//Route::get('users', 'UserController@index');
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('topic', 'Api\TopicController');

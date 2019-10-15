@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\Library\TestFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -29,8 +30,8 @@ class UserTest extends TestCase
             ->signIn($this);
 
         $attribute = [
-            page => 1,
-            pagination => 1
+            'page' => 1,
+            'pagination' => 1
         ];
 
         $response = $this->get('api/user?' . http_build_query($attribute));
@@ -55,5 +56,18 @@ class UserTest extends TestCase
         $response->assertOk();
 
         $this->assertEquals('johndoe@example.com', $response->getOriginalContent()['data']['user']['email']);
+    }
+
+    public function test_logon_user_can_delete_user_test()
+    {
+        $this->factory
+            ->createUser()
+            ->signIn($this);
+
+        $response = $this->delete('api/user/' . $this->factory->user->id);
+
+        $response->assertOk();
+
+        $this->assertTrue( User::where('id', $this->factory->user->id)->count() == 0);
     }
 }

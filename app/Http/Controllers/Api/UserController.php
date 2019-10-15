@@ -15,7 +15,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        $result = [
+            'message' => 'Successfully retrieved users.',
+            'data' => [
+                'users' => $users
+            ]
+        ];
+
+        return response()->json($result, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -100,6 +109,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+
+        return  'User successfully deleted.';
     }
 }

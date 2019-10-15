@@ -12,8 +12,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {dd('testing');
-        return view('user.settings');
+    {
+        return view('user.list');
     }
 
     /**
