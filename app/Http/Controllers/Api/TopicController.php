@@ -42,14 +42,11 @@ class TopicController extends Controller
 
         $topics = $topics->paginate($input['paginate']);
 
-        $categories = Category::all();
-
         $result = [
             'message' => 'Topics successfully retrieve',
             'data' => [
                 'topics' => $topics,
-                'topic_count' => $topics->count(),
-                'categories' => $categories
+                'topic_count' => $topics->count()
             ]
         ];
 
