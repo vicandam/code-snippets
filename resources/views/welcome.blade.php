@@ -319,7 +319,6 @@
                             .then(function (response) {
 
                                 _this.topics = response.data.data.topics;
-                                _this.loadCategories = response.data.data.categories;
                                 _this.topicResponse.topicCount = response.data.data.topic_count;
                                 _this.topicResponse.currentPage = response.data.data.topics.current_page;
                                 _this.topicResponse.lastPages = response.data.data.topics.last_page;

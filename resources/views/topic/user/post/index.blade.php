@@ -22,7 +22,7 @@
                                     <v-col
                                         cols="12"
                                         sm="6"
-                                        md="6"
+                                        md="4"
                                     >
                                         <div class="pa-4">
                                             <div class="text-left">
@@ -34,14 +34,10 @@
                                     <v-col
                                         cols="12"
                                         sm="6"
-                                        md="6"
+                                        md="8"
                                     >
                                         <div class="pt-2 pb-2">
                                             <div class=" text-right">
-                                                <v-btn class="ma-1" tile outlined dark color="#E64A19" href="/">
-                                                    <v-icon left>home</v-icon>
-                                                    Home
-                                                </v-btn>
                                                 <v-btn class="ma-1" tile outlined dark color="#E64A19">
                                                     <v-icon left>whatshot</v-icon>
                                                     Latest
@@ -49,6 +45,10 @@
                                                 <v-btn tile outlined dark color="#E64A19">
                                                     <v-icon left>stars</v-icon>
                                                     Top
+                                                </v-btn>
+                                                <v-btn class="ma-1" tile outlined dark color="#E64A19" href="/">
+                                                    <v-icon left>home</v-icon>
+                                                    Home
                                                 </v-btn>
                                             </div>
                                         </div>
@@ -294,7 +294,6 @@
                             .then(function (response) {
 
                                 _this.topics          = response.data.data.topics;
-                                _this.loadCategories          = response.data.data.categories;
                                 _this.topicCount      = response.data.data.topic_count;
                                 _this.currentPage     = response.data.data.topics.current_page;
                                 _this.lastPages       = response.data.data.topics.last_page;
