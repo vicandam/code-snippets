@@ -94,7 +94,7 @@
                                         </v-list-item-avatar>
 
                                         <v-list-item-content>
-                                            <v-list-item-subtitle> Created @{{ createdAt }} by me</v-list-item-subtitle>
+                                            <v-list-item-subtitle> Created @{{ createdAt }} by @{{ author }}</v-list-item-subtitle>
                                         </v-list-item-content>
 
                                         <v-row
@@ -158,6 +158,7 @@
                 description: @json($topic->description),
                 topicId: @json($topic->id),
                 createdAt: @json($topic->created_at),
+                author: @json($topic->user->name),
                 likes: @json($topic->likes),
                 views: @json($topic->views),
 
