@@ -209,6 +209,7 @@
                     .then(function (response) {
                         _this.categoryId     = _this.selectedCategoryId;
                         _this.categories     = response.data.data.categories;
+                        _this.loadCategories = response.data.data.categories;
                     });
                 },
 
