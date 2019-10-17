@@ -265,8 +265,20 @@
             mounted() {
                 this.searchTopics();
                 this.searchCategory();
+                this.getAllCategories();
             },
             methods: {
+                getAllCategories:function(){
+                    let _this = this;
+
+                    axios.get('/api/all/category/')
+                        .then(function (response) {
+                            _this.categoryId     = _this.selectedCategoryId;
+                            _this.categories     = response.data.data.categories;
+                            _this.loadCategories = response.data.data.categories;
+                        });
+                },
+
                 searchTopics: function () {
                     var _this                           = this;
                     _this.topics.data  = [];
