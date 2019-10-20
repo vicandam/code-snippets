@@ -56,7 +56,10 @@
                         </v-img>
 
                         <v-card-text class="text--primary">
-                            <div>Whitehaven Beach</div>
+                            <div class="font-italic">
+                                "I can do all this through him who gives me strength."
+                                <p class="text-right">- Philippians 4:13</p>
+                            </div>
                         </v-card-text>
 
                         <v-card-actions>
