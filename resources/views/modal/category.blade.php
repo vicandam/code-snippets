@@ -1,4 +1,4 @@
-<v-dialog v-model    = "roomDialog"
+<v-dialog v-model    = "categoryDialog"
           max-width  = "500px"
 >
     <v-card>
@@ -17,12 +17,11 @@
                             required
                             v-model          = "category.name"
                             label            = "Category Name"
-                            ref              = "room"
                             prepend-icon     = "edit"
-{{--                            v-validate       = "'required'"--}}
-                            data-vv-name     = "room"
+                            v-validate       = "'required'"
+                            data-vv-name     = "category"
                             color            = "#979895"
-{{--                            :error-messages  = "errors.collect('room')"--}}
+                            :error-messages  = "errors.collect('category')"
                             @keyup.enter     = "save"
                         ></v-text-field>
 
@@ -66,12 +65,11 @@
             >
                 <v-hover v-slot:default="{ hover }">
                     <v-btn
-{{--                        :disabled   = "errors.any()"--}}
+                        :disabled   = "errors.any()"
                         @click      = "save"
-                        :class      = "{ 'hover-btn' : hover }"
-                        class       = "black--text"
+                        class       = "white--text"
                         :elevation  = "0"
-                        color       = "button"
+                        color       = "#765d55"
                         tile
                         block
                     >

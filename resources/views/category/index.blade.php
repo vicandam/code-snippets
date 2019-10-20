@@ -23,7 +23,8 @@
                                 ></v-divider>
                                 <v-btn tile
                                        outlined
-                                       @click="roomDialog = true"
+                                       @click="categoryDialog = true"
+                                       color="#765d55"
                                 >
                                     <v-icon left>mdi-pencil</v-icon>
                                     New Category
@@ -45,8 +46,8 @@
                                 <v-layout row align-center>
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn color="button" class="black--text" v-on="on" fab
-                                                       @click="edit(item)"
+                                            <v-btn color="#765d55" class="white--text" v-on="on" fab
+                                                   @click="edit(item)"
                                                    x-small dark>
                                                 <v-icon>edit</v-icon>
                                             </v-btn>
@@ -57,7 +58,7 @@
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
                                             <v-btn class="mx-2" fab dark x-small v-on="on" color="red darken-3"
-                                                @click="remove(item)"
+                                                   @click="remove(item)"
                                             >
                                                 <v-icon dark>delete_outline</v-icon>
                                             </v-btn>
@@ -92,13 +93,15 @@
     </template>
 
     @include('modal.delete')
-    @include('modal.room')
+    @include('modal.category')
 
 @endsection
 
 @push('scripts')
 
     <script>
+        Vue.use(VeeValidate);
+
         new Vue({
             el: '#app',
             vuetify: new Vuetify(),
@@ -106,14 +109,14 @@
                 drawer: true,
                 info: '',
                 delete_dialog: false,
-                roomDialog: false,
+                categoryDialog: false,
                 update: false,
                 snackbar: false,
 
                 formTitle: '',
                 info: 'category',
                 text: '',
-                errors: [],
+                // errors: [],
                 imageData: '',
                 y: 'top',
 
@@ -150,7 +153,7 @@
 
                 },
 
-                remove: function(item) {
+                remove: function (item) {
                     this.delete_dialog = true;
                     this.categoryId = item.id;
                 },
@@ -167,13 +170,13 @@
                 },
 
                 edit: function (item) {
-                    this.roomDialog = true;
+                    this.categoryDialog = true;
                     this.category.name = item.category_name;
                     this.update = true;
                     this.categoryId = item.id;
                 },
-                testing: function() {
-                  alert('nice');
+                testing: function () {
+                    alert('nice');
                 },
 
                 save: function () {
@@ -182,26 +185,56 @@
                         name: this.category.name
                     };
 
-                    if (this.update) {
-                        axios.patch('/api/category/' + this.categoryId, attribute).then(function (response) {
-                            console.log(response.data);
-                            _this.getCategories();
-                            _this.snackbar = true;
-                            _this.roomDialog = false;
-                            _this.text = response.data.message;
-                        })
-                    } else {
-                        axios.post('api/category', attribute).then(function (response) {
-                            _this.getCategories();
-                            _this.roomDialog = false;
-                            _this.snackbar = true;
-                            _this.text = response.data.message;
-                        })
-                    }
+                    this.$validator.validateAll().then(result => {
+                        if (result == true) {
+                            if (this.update) {
+                                axios.patch('/api/category/' + this.categoryId, attribute).then(function (response) {
+                                    console.log(response.data);
+                                    _this.getCategories();
+                                    _this.snackbar = true;
+                                    _this.categoryDialog = false;
+                                    _this.text = response.data.message;
+                                }.bind(this)).catch(function (error) {
+                                    if (error.response.status === 422) {
+
+                                        if (error.response.data.errors) {
+
+                                            for (let key in error.response.data.errors) {
+                                                this.$validator.errors.add({
+                                                    field: 'category',
+                                                    msg: error.response.data.errors[key]
+                                                })
+                                            }
+                                        }
+                                    }
+                                }.bind(this));
+                            } else {
+                                axios.post('api/category', attribute).then(function (response) {
+                                    _this.getCategories();
+                                    _this.categoryDialog = false;
+                                    _this.snackbar = true;
+                                    _this.text = response.data.message;
+                                }.bind(this)).catch(function (error) {
+                                    if (error.response.status === 422) {
+
+                                        if (error.response.data.errors) {
+
+                                            for (let key in error.response.data.errors) {
+                                                this.$validator.errors.add({
+                                                    field: 'category',
+                                                    msg: error.response.data.errors[key]
+                                                })
+                                            }
+                                        }
+                                    }
+                                }.bind(this));
+                            }
+                        }
+                    });
                 },
 
                 close: function () {
-                    this.roomDialog = false;
+                    this.categoryDialog = false;
                 }
 
                 // clearFields: function () {

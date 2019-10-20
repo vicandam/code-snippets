@@ -43,6 +43,7 @@
 <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
 <script src="{{ asset('js/summernote.min.js') }}"></script>
 <script src="{{ asset('js/prism.js') }}"></script>
+<script src="{{ asset('js/vee-validate.js') }}"></script>
 @stack('scripts')
 </body>
 </html>
