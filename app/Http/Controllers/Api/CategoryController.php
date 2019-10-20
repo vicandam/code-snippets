@@ -75,10 +75,12 @@ class CategoryController extends Controller
             $extension       = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore = $filename .'_'.time().'.'.$extension;
             $path            = $request->file('image')->storeAs('public/avatars', $fileNameToStore);
+        } else {
+
         }
 
         $category->name = $input['name'];
-        $category->image = isset($fileNameToStore) ? $fileNameToStore : $faker->image;
+        $category->image = isset($fileNameToStore) ? $fileNameToStore : 'no-image.png';
 
         $category->save();
 
