@@ -48,6 +48,7 @@
                             v-on="on"
                             color="#fdf3f6"
                         >
+                            {{ auth()->user()->name }}
                             <v-icon>arrow_drop_down</v-icon>
                         </v-btn>
                     </template>

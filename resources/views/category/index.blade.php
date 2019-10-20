@@ -23,7 +23,7 @@
                                 ></v-divider>
                                 <v-btn tile
                                        outlined
-                                       @click="categoryDialog = true"
+                                       @click="newCategory"
                                        color="#765d55"
                                 >
                                     <v-icon left>mdi-pencil</v-icon>
@@ -149,8 +149,8 @@
                     })
                 },
 
-                delete: function (item) {
-
+                newCategory() {
+                    this.categoryDialog = true;
                 },
 
                 remove: function (item) {
@@ -175,9 +175,6 @@
                     this.update = true;
                     this.categoryId = item.id;
                 },
-                testing: function () {
-                    alert('nice');
-                },
 
                 save: function () {
                     let _this = this;
@@ -189,7 +186,6 @@
                         if (result == true) {
                             if (this.update) {
                                 axios.patch('/api/category/' + this.categoryId, attribute).then(function (response) {
-                                    console.log(response.data);
                                     _this.getCategories();
                                     _this.snackbar = true;
                                     _this.categoryDialog = false;
