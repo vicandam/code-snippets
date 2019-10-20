@@ -13,10 +13,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->super_user) {
-            return view('category.index');
+        if(auth()->user())
+        {
+            if (auth()->user()->super_user) {
+                return view('category.index');
+            } else {
+                return redirect()->back();
+            }
         } else {
-            return redirect()->back();
+            return redirect()->route('login');
         }
     }
 
