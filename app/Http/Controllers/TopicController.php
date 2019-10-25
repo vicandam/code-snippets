@@ -26,7 +26,9 @@ class TopicController extends Controller
 
     public function userPost()
     {
-        return view('topic.user.post.index');
+        auth()->user() ?  $url=view('topic.user.post.index') : ($url=redirect()->route('login'));
+
+        return $url;
     }
 
     /**
