@@ -179,7 +179,7 @@
                         @include('spinner.index')
 
                         <template v-if="topicResponse.topicCount == 0 && isLoading == false">
-                            <div class="pa-3">
+                            <div v-cloak class="pa-3">
                                 <v-card
                                     class="mx-auto"
                                     color="#EFEBE9"
@@ -286,7 +286,7 @@
                 }
             }),
 
-            mounted() {
+            created() {
                 this.searchTopics();
                 this.searchCategory();
                 this.getAllCategories();

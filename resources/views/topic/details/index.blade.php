@@ -193,7 +193,7 @@
                 }
             }),
 
-            mounted() {
+            created() {
                 this.loadCategories = this.categories;
                 this.getAllCategories();
             },

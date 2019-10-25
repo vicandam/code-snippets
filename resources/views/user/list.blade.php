@@ -149,7 +149,7 @@
             }),
 
 
-            mounted() {
+            created() {
                 this.getUsers();
             },
 
