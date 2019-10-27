@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -110,6 +111,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
+
+        Topic::where('user_id', $id)->delete();
 
         return  'User successfully deleted.';
     }

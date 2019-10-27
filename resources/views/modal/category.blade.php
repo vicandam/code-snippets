@@ -20,8 +20,8 @@
                             prepend-icon     = "edit"
                             v-validate       = "'required'"
                             data-vv-name     = "category"
-                            color            = "#979895"
                             :error-messages  = "errors.collect('category')"
+                            color            = "#979895"
                             @keyup.enter     = "save"
                         ></v-text-field>
 
