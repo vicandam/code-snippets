@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('super_user', 0)->get();
 
         $result = [
             'message' => 'Successfully retrieved users.',
