@@ -27,6 +27,19 @@
                 </v-list-item-content>
             </v-list-item>
 
+            <v-list-item
+                :href="'{{ url('/topic-my-posts') }}'"
+            >
+                <v-list-item-action>
+                    <v-icon left>collections_bookmark</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                    <v-list-item-title class="grey--text">
+                        My Post
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
             <v-list-item href="{{ route('developer.index') }}">
                 <v-list-item-action>
                     <v-icon>developer_board</v-icon>
